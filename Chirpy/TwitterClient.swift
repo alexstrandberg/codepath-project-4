@@ -90,28 +90,28 @@ class TwitterClient: BDBOAuth1SessionManager {
         
     }
     
-    func favorite(tweet: Tweet, success: () -> (), failure: NSError -> ()) {
+    func favorite(tweet: Tweet, success: (Tweet) -> (), failure: NSError -> ()) {
         let url = JSONURLs.Favorite.rawValue + tweet.idStr!
         TwitterClient.sharedInstance.POST(url, parameters: nil, progress: nil, success: { (task: NSURLSessionDataTask, response: AnyObject?) in
-            success()
+            success(Tweet(dictionary: response as! NSDictionary))
         }) { (task: NSURLSessionDataTask?, error: NSError) in
             failure(error)
         }
     }
     
-    func unfavorite(tweet: Tweet, success: () -> (), failure: NSError -> ()) {
+    func unfavorite(tweet: Tweet, success: (Tweet) -> (), failure: NSError -> ()) {
         let url = JSONURLs.Unfavorite.rawValue + tweet.idStr!
         TwitterClient.sharedInstance.POST(url, parameters: nil, progress: nil, success: { (task: NSURLSessionDataTask, response: AnyObject?) in
-            success()
+            success(Tweet(dictionary: response as! NSDictionary))
         }) { (task: NSURLSessionDataTask?, error: NSError) in
             failure(error)
         }
     }
     
-    func retweet(tweet: Tweet, success: () -> (), failure: NSError -> ()) {
+    func retweet(tweet: Tweet, success: (Tweet) -> (), failure: NSError -> ()) {
         let url = JSONURLs.Retweet.rawValue + tweet.idStr! + ".json"
         TwitterClient.sharedInstance.POST(url, parameters: nil, progress: nil, success: { (task: NSURLSessionDataTask, response: AnyObject?) in
-            success()
+            success(Tweet(dictionary: response as! NSDictionary))
         }) { (task: NSURLSessionDataTask?, error: NSError) in
             failure(error)
         }
