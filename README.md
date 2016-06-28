@@ -4,7 +4,7 @@ Chirpy is a basic Twitter app to read and compose tweets the [Twitter API](https
 
 Submitted by: Alexander Strandberg
 
-Time spent: 5 hours spent in total
+Time spent: 7 hours spent in total
 
 ## User Stories
 
@@ -12,10 +12,10 @@ The following **required** functionality is completed:
 
 - [X] User can sign in using OAuth login flow
 - [X] The current signed in user will be persisted across restarts
-- [ ] User can view last 20 tweets from their home timeline
-- [ ] In the home timeline, user can view tweet with the user profile picture, username, tweet text, and timestamp.
+- [X] User can view last 20 tweets from their home timeline
+- [X] In the home timeline, user can view tweet with the user profile picture, username, tweet text, and timestamp.
 - [ ] User can pull to refresh.
-- [ ] User should display the relative timestamp for each tweet "8m", "7h"
+- [X] User should display the relative timestamp for each tweet "8m", "7h"
 - [ ] Retweeting and favoriting should increment the retweet and favorite count.
 - [ ] User can tap on a tweet to view it, with controls to retweet, favorite, and reply.
 - [ ] User can compose a new tweet by tapping on a compose button.
@@ -64,6 +64,9 @@ Describe any challenges encountered while building the app.
 List an 3rd party libraries, icons, graphics, or other assets you used in your app.
 
 - [AFNetworking](https://github.com/AFNetworking/AFNetworking) - networking task library
+- [BDBOAuth1Manager](https://github.com/bdbergeron/BDBOAuth1Manager) - OAuth library
+- [IconMonstr - Home 7](http://iconmonstr.com/home-7)
+- [swift-timeago](https://github.com/zemirco/swift-timeago) - Code adapted from function that displays relative timestamp
 
 ## License
 
