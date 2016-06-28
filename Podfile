@@ -8,4 +8,5 @@ target 'Chirpy' do
   # Pods for Chirpy
   pod 'AFNetworking'
   pod 'BDBOAuth1Manager'
+  pod 'MBProgressHUD'
 end
