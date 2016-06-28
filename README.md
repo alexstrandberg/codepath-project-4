@@ -11,7 +11,7 @@ Time spent: 5 hours spent in total
 The following **required** functionality is completed:
 
 - [X] User can sign in using OAuth login flow
-- [ ] The current signed in user will be persisted across restarts
+- [X] The current signed in user will be persisted across restarts
 - [ ] User can view last 20 tweets from their home timeline
 - [ ] In the home timeline, user can view tweet with the user profile picture, username, tweet text, and timestamp.
 - [ ] User can pull to refresh.
