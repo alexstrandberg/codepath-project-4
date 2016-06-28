@@ -12,6 +12,10 @@ import BDBOAuth1Manager
 enum JSONURLs: String {
     case Timeline = "1.1/statuses/home_timeline.json"
     case VerifyCredentials = "1.1/account/verify_credentials.json"
+    case Favorite = "1.1/favorites/create.json?id="
+    case Unfavorite = "1.1/favorites/destroy.json?id="
+    case Retweet = "1.1/statuses/retweet/"
+    case PostTweet = "1.1/statuses/update.json?status="
 }
 
 enum TokenURLs: String {
@@ -84,5 +88,41 @@ class TwitterClient: BDBOAuth1SessionManager {
                 failure(error)
         })
         
+    }
+    
+    func favorite(tweet: Tweet, success: () -> (), failure: NSError -> ()) {
+        let url = JSONURLs.Favorite.rawValue + tweet.idStr!
+        TwitterClient.sharedInstance.POST(url, parameters: nil, progress: nil, success: { (task: NSURLSessionDataTask, response: AnyObject?) in
+            success()
+        }) { (task: NSURLSessionDataTask?, error: NSError) in
+            failure(error)
+        }
+    }
+    
+    func unfavorite(tweet: Tweet, success: () -> (), failure: NSError -> ()) {
+        let url = JSONURLs.Unfavorite.rawValue + tweet.idStr!
+        TwitterClient.sharedInstance.POST(url, parameters: nil, progress: nil, success: { (task: NSURLSessionDataTask, response: AnyObject?) in
+            success()
+        }) { (task: NSURLSessionDataTask?, error: NSError) in
+            failure(error)
+        }
+    }
+    
+    func retweet(tweet: Tweet, success: () -> (), failure: NSError -> ()) {
+        let url = JSONURLs.Retweet.rawValue + tweet.idStr! + ".json"
+        TwitterClient.sharedInstance.POST(url, parameters: nil, progress: nil, success: { (task: NSURLSessionDataTask, response: AnyObject?) in
+            success()
+        }) { (task: NSURLSessionDataTask?, error: NSError) in
+            failure(error)
+        }
+    }
+    
+    func postTweet(message: String, success: (Tweet) -> (), failure: NSError -> ()) {
+        let url = JSONURLs.PostTweet.rawValue + message
+        TwitterClient.sharedInstance.POST(url, parameters: nil, progress: nil, success: { (task: NSURLSessionDataTask, response: AnyObject?) in
+            success(Tweet(dictionary: response as! NSDictionary))
+        }) { (task: NSURLSessionDataTask?, error: NSError) in
+            failure(error)
+        }
     }
 }

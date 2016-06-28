@@ -100,4 +100,20 @@ class TimelineViewController: UIViewController, UITableViewDelegate, UITableView
             MBProgressHUD.hideHUDForView(self.view, animated: true)
         }
     }
+    
+    // MARK: - Navigation
+    
+    // In a storyboard-based application, you will often want to do a little preparation before navigation
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        // Get the new view controller using segue.destinationViewController.
+        
+        // Pass the selected object to the new view controller.
+        
+        if segue.identifier == "detailSegue" {
+            let vc = segue.destinationViewController as! DetailViewController
+            let cell = sender as! TimelineCell
+            let indexPath = tableView.indexPathForCell(cell)
+            vc.tweet = tweets[indexPath!.row]
+        }
+    }
 }
