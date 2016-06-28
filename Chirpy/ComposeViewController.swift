@@ -67,7 +67,12 @@ class ComposeViewController: UIViewController, UITextViewDelegate {
     }
 
     @IBAction func postTweet(sender: UIButton) {
-        
+        TwitterClient.sharedInstance.postTweet(tweetTextView.text, success: { (tweet: Tweet) in
+            print(tweet.text)
+            self.dismissViewControllerAnimated(true, completion: nil)
+        }) { (error: NSError) in
+            print(error.localizedDescription)
+        }
     }
     
     @IBAction func cancelButton(sender: UIButton) {

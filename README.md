@@ -4,7 +4,7 @@ Chirpy is a basic Twitter app to read and compose tweets the [Twitter API](https
 
 Submitted by: Alexander Strandberg
 
-Time spent: 9 hours spent in total
+Time spent: 11 hours spent in total
 
 ## User Stories
 
@@ -16,9 +16,9 @@ The following **required** functionality is completed:
 - [X] In the home timeline, user can view tweet with the user profile picture, username, tweet text, and timestamp.
 - [X] User can pull to refresh.
 - [X] User should display the relative timestamp for each tweet "8m", "7h"
-- [ ] Retweeting and favoriting should increment the retweet and favorite count.
-- [ ] User can tap on a tweet to view it, with controls to retweet, favorite, and reply.
-- [ ] User can compose a new tweet by tapping on a compose button.
+- [X] Retweeting and favoriting should increment the retweet and favorite count.
+- [X] User can tap on a tweet to view it, with controls to retweet, favorite, and reply.
+- [X] User can compose a new tweet by tapping on a compose button.
 - [ ] User can tap the profile image in any tweet to see another user's profile
 - [ ] Contains the user header view: picture and tagline
 - [ ] Contains a section with the users basic stats: # tweets, # following, # followers

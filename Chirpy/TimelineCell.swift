@@ -25,8 +25,4 @@ class TimelineCell: UITableViewCell {
 
         // Configure the view for the selected state
     }
-    
-    override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
-        endEditing(true)
-    }
 }
