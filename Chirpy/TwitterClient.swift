@@ -22,6 +22,7 @@ enum TokenURLs: String {
 
 enum Observers: String {
     case Logout = "UserDidLogout"
+    case Login = "UserDidLogin"
 }
 
 class TwitterClient: BDBOAuth1SessionManager {

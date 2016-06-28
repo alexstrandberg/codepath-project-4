@@ -20,10 +20,19 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         window?.rootViewController = vc
     }
     
-    func showHomeViewController() {
+    func showTabBarController() {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        let vc = storyboard.instantiateViewControllerWithIdentifier("HomeNavigationController")
-        window?.rootViewController = vc
+        let homeNavigationController = storyboard.instantiateViewControllerWithIdentifier("TimelineNavigationController") as! UINavigationController
+        homeNavigationController.tabBarItem.title = "Home"
+        homeNavigationController.tabBarItem.image = UIImage(named: "home")
+        //let homeViewController = homeNavigationController.topViewController as! TimelineViewController
+        
+        
+        let tabBarController = UITabBarController()
+        tabBarController.viewControllers = [homeNavigationController]
+        
+        window?.rootViewController = tabBarController
+        window?.makeKeyAndVisible()
     }
     
 
@@ -31,11 +40,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Override point for customization after application launch.
         
         if User.currentUser != nil {
-            showHomeViewController()
+            showTabBarController()
         }
         
         NSNotificationCenter.defaultCenter().addObserverForName(Observers.Logout.rawValue, object: nil, queue: NSOperationQueue.mainQueue()) { (notification: NSNotification) in
             self.showLoginScreen()
+        }
+        
+        NSNotificationCenter.defaultCenter().addObserverForName(Observers.Login.rawValue, object: nil, queue: NSOperationQueue.mainQueue()) { (notification: NSNotification) in
+            self.showTabBarController()
         }
         
         return true
