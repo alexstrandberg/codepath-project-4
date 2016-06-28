@@ -33,10 +33,8 @@ class DetailViewController: UIViewController {
         
         replyButton.setImage(UIImage(named: "replyPressed"), forState: .Highlighted)
         
-        retweetButton.setImage(UIImage(named: "retweetPressed"), forState: .Highlighted)
         retweetButton.setImage(UIImage(named: "retweetOnHover"), forState: .Selected)
         
-        favoriteButton.setImage(UIImage(named: "likePressed"), forState: .Highlighted)
         favoriteButton.setImage(UIImage(named: "likeOnHover"), forState: .Selected)
         
         updateView()
@@ -72,14 +70,18 @@ class DetailViewController: UIViewController {
             
             if tweet.favorited == 1 {
                 favoriteButton.selected = true
+                favoriteButton.setImage(UIImage(named: "likePressed"), forState: .Highlighted)
             } else {
                 favoriteButton.selected = false
+                favoriteButton.setImage(UIImage(named: "likeOnPressed"), forState: .Highlighted)
             }
             
             if tweet.retweeted == 1 {
                 retweetButton.selected = true
+                retweetButton.setImage(UIImage(named: "retweetPressed"), forState: .Highlighted)
             } else {
                 retweetButton.selected = false
+                retweetButton.setImage(UIImage(named: "retweetOnPressed"), forState: .Highlighted)
             }
         }
     }

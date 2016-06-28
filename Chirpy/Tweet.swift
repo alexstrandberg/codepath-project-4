@@ -100,9 +100,9 @@ class Tweet: NSObject {
     }
     
     func favorite(success: () -> (), failure: (NSError) -> ()) {
-        TwitterClient.sharedInstance.favorite(self, success: { () in
-            self.favoritesCount += 1
-            self.favorited = 1
+        TwitterClient.sharedInstance.favorite(self, success: { (tweet: Tweet) in
+            self.favoritesCount = tweet.favoritesCount
+            self.favorited = tweet.favorited
             success()
         }) { (error: NSError) in
             failure(error)
@@ -110,9 +110,9 @@ class Tweet: NSObject {
     }
     
     func unfavorite(success: () -> (), failure: (NSError) -> ()) {
-        TwitterClient.sharedInstance.unfavorite(self, success: { () in
-            self.favoritesCount -= 1
-            self.favorited = 0
+        TwitterClient.sharedInstance.unfavorite(self, success: { (tweet: Tweet) in
+            self.favoritesCount = tweet.favoritesCount
+            self.favorited = tweet.favorited
             success()
         }) { (error: NSError) in
             failure(error)
@@ -120,9 +120,9 @@ class Tweet: NSObject {
     }
     
     func retweet(success: () -> (), failure: (NSError) -> ()) {
-        TwitterClient.sharedInstance.retweet(self, success: { () in
-            self.retweetCount += 1
-            self.retweeted = 1
+        TwitterClient.sharedInstance.retweet(self, success: { (tweet: Tweet) in
+            self.retweetCount = tweet.retweetCount
+            self.retweeted = tweet.retweeted
             success()
         }) { (error: NSError) in
             failure(error)
