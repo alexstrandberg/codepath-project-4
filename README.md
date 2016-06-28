@@ -4,7 +4,7 @@ Chirpy is a basic Twitter app to read and compose tweets the [Twitter API](https
 
 Submitted by: Alexander Strandberg
 
-Time spent: 7 hours spent in total
+Time spent: 9 hours spent in total
 
 ## User Stories
 
@@ -14,7 +14,7 @@ The following **required** functionality is completed:
 - [X] The current signed in user will be persisted across restarts
 - [X] User can view last 20 tweets from their home timeline
 - [X] In the home timeline, user can view tweet with the user profile picture, username, tweet text, and timestamp.
-- [ ] User can pull to refresh.
+- [X] User can pull to refresh.
 - [X] User should display the relative timestamp for each tweet "8m", "7h"
 - [ ] Retweeting and favoriting should increment the retweet and favorite count.
 - [ ] User can tap on a tweet to view it, with controls to retweet, favorite, and reply.
@@ -31,10 +31,10 @@ The following **optional** features are implemented:
 
 - [ ] User can load more tweets once they reach the bottom of the feed using infinite loading similar to the actual Twitter client.
 - [ ] User should be able to unretweet and unfavorite and should decrement the retweet and favorite count.
-- [ ] When composing, you should have a countdown in the upper right for the tweet limit.
+- [X] When composing, you should have a countdown in the upper right for the tweet limit.
 - [ ] After creating a new tweet, a user should be able to view it in the timeline immediately without refetching the timeline from the network.
 - [ ] User can reply to any tweet, and replies should be prefixed with the username and the reply_id should be set when posting the tweet
-- [ ] Links in tweets are clickable
+- [X] Links in tweets are clickable
 - [ ] User can switch between timeline, mentions, or profile view through a tab bar
 - [ ] Pulling down the profile page should blur and resize the header image.
 
@@ -64,6 +64,7 @@ Describe any challenges encountered while building the app.
 List an 3rd party libraries, icons, graphics, or other assets you used in your app.
 
 - [AFNetworking](https://github.com/AFNetworking/AFNetworking) - networking task library
+- [MBProgressHUD](https://cocoapods.org/pods/MBProgressHUD) - progress indicator library
 - [BDBOAuth1Manager](https://github.com/bdbergeron/BDBOAuth1Manager) - OAuth library
 - [IconMonstr - Home 7](http://iconmonstr.com/home-7)
 - [swift-timeago](https://github.com/zemirco/swift-timeago) - Code adapted from function that displays relative timestamp

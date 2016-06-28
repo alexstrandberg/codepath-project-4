@@ -13,8 +13,8 @@ class TimelineCell: UITableViewCell {
     @IBOutlet weak var usernameLabel: UILabel!
     @IBOutlet weak var screenNameLabel: UILabel!
     @IBOutlet weak var timestampLabel: UILabel!
-    @IBOutlet weak var tweetTextLabel: UILabel!
-
+    @IBOutlet weak var tweetText: UITextView!
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
@@ -25,5 +25,8 @@ class TimelineCell: UITableViewCell {
 
         // Configure the view for the selected state
     }
-
+    
+    override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
+        endEditing(true)
+    }
 }

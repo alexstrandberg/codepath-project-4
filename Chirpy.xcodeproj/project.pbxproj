@@ -16,6 +16,7 @@
 		CF2120FB1D21C83100068D8F /* Tweet.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF2120FA1D21C83100068D8F /* Tweet.swift */; };
 		CF2120FD1D21C8CE00068D8F /* TwitterClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF2120FC1D21C8CE00068D8F /* TwitterClient.swift */; };
 		CF2120FF1D21E7B800068D8F /* TimelineViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF2120FE1D21E7B800068D8F /* TimelineViewController.swift */; };
+		CFB0639F1D22D5D500713B9C /* ComposeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFB0639E1D22D5D500713B9C /* ComposeViewController.swift */; };
 		CFBEE3DE1D2222F70009A497 /* home.png in Resources */ = {isa = PBXBuildFile; fileRef = CFBEE3DD1D2222F70009A497 /* home.png */; };
 		CFBEE3E31D2227F70009A497 /* TimelineCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFBEE3E21D2227F70009A497 /* TimelineCell.swift */; };
 		D600DA05034FE8E375B87075 /* Pods_Chirpy.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7B59C74F66643507D1BC377D /* Pods_Chirpy.framework */; };
@@ -34,6 +35,7 @@
 		CF2120FA1D21C83100068D8F /* Tweet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Tweet.swift; sourceTree = "<group>"; };
 		CF2120FC1D21C8CE00068D8F /* TwitterClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TwitterClient.swift; sourceTree = "<group>"; };
 		CF2120FE1D21E7B800068D8F /* TimelineViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimelineViewController.swift; sourceTree = "<group>"; };
+		CFB0639E1D22D5D500713B9C /* ComposeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ComposeViewController.swift; sourceTree = "<group>"; };
 		CFBEE3DD1D2222F70009A497 /* home.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = home.png; path = Chirpy/home.png; sourceTree = "<group>"; };
 		CFBEE3E21D2227F70009A497 /* TimelineCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimelineCell.swift; sourceTree = "<group>"; };
 		E048846F38B56A9B86CAF222 /* Pods-Chirpy.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Chirpy.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Chirpy/Pods-Chirpy.debug.xcconfig"; sourceTree = "<group>"; };
@@ -91,6 +93,7 @@
 			children = (
 				CF1BEF5D1D21BC4100BF0064 /* LoginViewController.swift */,
 				CF2120FE1D21E7B800068D8F /* TimelineViewController.swift */,
+				CFB0639E1D22D5D500713B9C /* ComposeViewController.swift */,
 			);
 			name = "View Controllers";
 			sourceTree = "<group>";
@@ -264,6 +267,7 @@
 				CF2120FD1D21C8CE00068D8F /* TwitterClient.swift in Sources */,
 				CFBEE3E31D2227F70009A497 /* TimelineCell.swift in Sources */,
 				CF1BEF5E1D21BC4100BF0064 /* LoginViewController.swift in Sources */,
+				CFB0639F1D22D5D500713B9C /* ComposeViewController.swift in Sources */,
 				CF1BEF5C1D21BC4100BF0064 /* AppDelegate.swift in Sources */,
 				CF2120F91D21C7EF00068D8F /* User.swift in Sources */,
 				CF2120FB1D21C83100068D8F /* Tweet.swift in Sources */,

@@ -7,11 +7,13 @@
 //
 
 import UIKit
+import MBProgressHUD
 
 class TimelineViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     @IBOutlet weak var tableView: UITableView!
     
     let CellIdentifier = "TimelineCell"
+    let CellHeightEstimate: CGFloat = 87
     
     var tweets = [Tweet]() {
         didSet {
@@ -19,20 +21,23 @@ class TimelineViewController: UIViewController, UITableViewDelegate, UITableView
         }
     }
     
+    var isFirstLoad = true
+    let refreshControl = UIRefreshControl()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         
         tableView.dataSource = self
         tableView.delegate = self
-        tableView.estimatedRowHeight = 130
+        tableView.estimatedRowHeight = CellHeightEstimate
         tableView.rowHeight = UITableViewAutomaticDimension
         
-        TwitterClient.sharedInstance.homeTimeline({ (tweets: [Tweet]) in
-            self.tweets.appendContentsOf(tweets)
-            }, failure: { (error: NSError) in
-                print(error.localizedDescription)
-        })
+        // Initialize a UIRefreshControl
+        refreshControl.addTarget(self, action: #selector(refreshControlAction(_:)), forControlEvents: UIControlEvents.ValueChanged)
+        //tableView.insertSubview(networkErrorView, atIndex: 0)
+        tableView.insertSubview(refreshControl, atIndex: 0)
+        refreshControlAction(refreshControl)
     }
     
     override func didReceiveMemoryWarning() {
@@ -62,7 +67,7 @@ class TimelineViewController: UIViewController, UITableViewDelegate, UITableView
             cell.screenNameLabel.text = "@" + screenname
         }
         
-        cell.tweetTextLabel.text = tweet.text
+        cell.tweetText.text = tweet.text
         
         if let timestamp = tweet.timestamp {
             cell.timestampLabel.text = Tweet.timeAgoSince(timestamp)
@@ -73,5 +78,26 @@ class TimelineViewController: UIViewController, UITableViewDelegate, UITableView
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
+    }
+    
+    func refreshControlAction(refreshControl: UIRefreshControl) {
+        if isFirstLoad {
+            // Display HUD right before the request is made
+            MBProgressHUD.showHUDAddedTo(self.view, animated: true)
+        }
+        
+        TwitterClient.sharedInstance.homeTimeline({ (tweets: [Tweet]) in
+            self.tweets = []
+            self.tweets.appendContentsOf(tweets)
+            }, failure: { (error: NSError) in
+                print(error.localizedDescription)
+        })
+        
+        refreshControl.endRefreshing()
+        if self.isFirstLoad {
+            self.isFirstLoad = false
+            // Hide HUD once the network request comes back (must be done on main UI thread)
+            MBProgressHUD.hideHUDForView(self.view, animated: true)
+        }
     }
 }
