@@ -1,5 +1,5 @@
 //
-//  ViewController.swift
+//  LoginViewController.swift
 //  Chirpy
 //
 //  Created by Alexander Strandberg on 6/27/16.
@@ -7,8 +7,9 @@
 //
 
 import UIKit
+import BDBOAuth1Manager
 
-class ViewController: UIViewController {
+class LoginViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -19,7 +20,13 @@ class ViewController: UIViewController {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-
-
+    
+    @IBAction func onLoginButton(sender: AnyObject) {
+        TwitterClient.sharedInstance.login({
+            self.performSegueWithIdentifier("loginSegue", sender: nil)
+        }, failure: { (error: NSError) in
+                print(error.localizedDescription)
+        })
+    }
 }
 

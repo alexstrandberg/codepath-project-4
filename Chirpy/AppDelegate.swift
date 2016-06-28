@@ -7,15 +7,37 @@
 //
 
 import UIKit
+import BDBOAuth1Manager
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
-
+    
+    func showLoginScreen() {
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let vc = storyboard.instantiateViewControllerWithIdentifier("LoginViewController")
+        window?.rootViewController = vc
+    }
+    
+    func showHomeViewController() {
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let vc = storyboard.instantiateViewControllerWithIdentifier("HomeNavigationController")
+        window?.rootViewController = vc
+    }
+    
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         // Override point for customization after application launch.
+        
+        if User.currentUser != nil {
+            showHomeViewController()
+        }
+        
+        NSNotificationCenter.defaultCenter().addObserverForName(Observers.Logout.rawValue, object: nil, queue: NSOperationQueue.mainQueue()) { (notification: NSNotification) in
+            self.showLoginScreen()
+        }
+        
         return true
     }
 
@@ -39,6 +61,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func applicationWillTerminate(application: UIApplication) {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
+    }
+    
+    func application(application: UIApplication, handleOpenURL url: NSURL) -> Bool {
+        TwitterClient.sharedInstance.handleOpenURL(url)
+        
+        return true
     }
 
 
