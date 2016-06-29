@@ -4,7 +4,7 @@ Chirpy is a basic Twitter app to read and compose tweets the [Twitter API](https
 
 Submitted by: Alexander Strandberg
 
-Time spent: 11 hours spent in total
+Time spent: 13 hours spent in total
 
 ## User Stories
 
@@ -19,13 +19,12 @@ The following **required** functionality is completed:
 - [X] Retweeting and favoriting should increment the retweet and favorite count.
 - [X] User can tap on a tweet to view it, with controls to retweet, favorite, and reply.
 - [X] User can compose a new tweet by tapping on a compose button.
-- [ ] User can tap the profile image in any tweet to see another user's profile
-- [ ] Contains the user header view: picture and tagline
-- [ ] Contains a section with the users basic stats: # tweets, # following, # followers
-- [ ] Profile view should include that user's timeline
-- [ ] User can navigate to view their own profile
-- [ ] Contains the user header view: picture and tagline
-- [ ] Contains a section with the users basic stats: # tweets, # following, # followers
+- [X] User can tap the profile image in any tweet to see another user's profile
+- [X] Contains the user header view: picture and tagline
+- [X] Contains a section with the users basic stats: # tweets, # following, # followers
+- [X] User can navigate to view their own profile
+- [X] Contains the user header view: picture and tagline
+- [X] Contains a section with the users basic stats: # tweets, # following, # followers
 
 The following **optional** features are implemented:
 
@@ -37,6 +36,7 @@ The following **optional** features are implemented:
 - [X] Links in tweets are clickable
 - [ ] User can switch between timeline, mentions, or profile view through a tab bar
 - [ ] Pulling down the profile page should blur and resize the header image.
+- [ ] Profile view should include that user's timeline
 
 The following **additional** features are implemented:
 
@@ -68,6 +68,8 @@ List an 3rd party libraries, icons, graphics, or other assets you used in your a
 - [BDBOAuth1Manager](https://github.com/bdbergeron/BDBOAuth1Manager) - OAuth library
 - [IconMonstr - Home 7](http://iconmonstr.com/home-7)
 - [swift-timeago](https://github.com/zemirco/swift-timeago) - Code adapted from function that displays relative timestamp
+- [IconMonstr - User 6](http://iconmonstr.com/user-6)
+- [IconMonstr - Picture 1](http://iconmonstr.com/picture-1)
 
 ## License
 

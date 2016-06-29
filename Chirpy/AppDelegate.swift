@@ -27,9 +27,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         homeNavigationController.tabBarItem.image = UIImage(named: "home")
         //let homeViewController = homeNavigationController.topViewController as! TimelineViewController
         
+        let profileNavigationController = storyboard.instantiateViewControllerWithIdentifier("ProfileNavigationController") as! UINavigationController
+        profileNavigationController.tabBarItem.title = "Me"
+        profileNavigationController.tabBarItem.image = UIImage(named: "user")
+        let profileViewController = profileNavigationController.topViewController as! ProfileViewController
+        profileViewController.user = User.currentUser
         
         let tabBarController = UITabBarController()
-        tabBarController.viewControllers = [homeNavigationController]
+        tabBarController.viewControllers = [homeNavigationController, profileNavigationController]
         
         window?.rootViewController = tabBarController
         window?.makeKeyAndVisible()

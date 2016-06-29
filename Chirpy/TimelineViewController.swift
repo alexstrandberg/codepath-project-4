@@ -60,8 +60,15 @@ class TimelineViewController: UIViewController, UITableViewDelegate, UITableView
         cell.usernameLabel.text = tweet.user?.name
         
         if let profileURL = tweet.user?.profileURL {
-            cell.profileImageView.setImageWithURL(profileURL)
+            let tempImageView = UIImageView(frame: CGRect(x: 0, y: 0, width: 50, height: 50))
+            tempImageView.setImageWithURLRequest(NSURLRequest(URL: profileURL), placeholderImage: nil, success: { (request: NSURLRequest, response: NSHTTPURLResponse?, image: UIImage) in
+                cell.profileButton.setImage(image, forState: .Normal)
+                cell.profileButton.selected = false
+            }, failure: { (request: NSURLRequest, response:NSHTTPURLResponse?, error: NSError) in
+                print(error.localizedDescription)
+            })
         }
+        cell.profileButton.tag = indexPath.row
         
         if let screenname = tweet.user?.screenname {
             cell.screenNameLabel.text = "@" + screenname
@@ -101,6 +108,10 @@ class TimelineViewController: UIViewController, UITableViewDelegate, UITableView
         }
     }
     
+    func showProfile(sender: UIButton) {
+        performSegueWithIdentifier("profileSegue", sender: sender)
+    }
+    
     // MARK: - Navigation
     
     // In a storyboard-based application, you will often want to do a little preparation before navigation
@@ -114,6 +125,11 @@ class TimelineViewController: UIViewController, UITableViewDelegate, UITableView
             let cell = sender as! TimelineCell
             let indexPath = tableView.indexPathForCell(cell)
             vc.tweet = tweets[indexPath!.row]
+        } else if segue.identifier == "profileSegue" {
+            let navigationController = segue.destinationViewController as! UINavigationController
+            let vc = navigationController.topViewController as! ProfileViewController
+            let button = sender as! UIButton
+            vc.user = tweets[button.tag].user
         }
     }
 }
