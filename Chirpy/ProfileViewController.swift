@@ -17,6 +17,7 @@ class ProfileViewController: UIViewController {
     @IBOutlet weak var followersCountLabel: UILabel!
     @IBOutlet weak var followersLabel: UILabel!
     @IBOutlet weak var exitButton: UIBarButtonItem!
+    @IBOutlet weak var bannerImageView: UIImageView!
     
     var user: User?
     
@@ -63,6 +64,10 @@ class ProfileViewController: UIViewController {
                 followersLabel.text = "Followers"
             } else {
                 followersLabel.text = "Follower"
+            }
+            
+            if let profileBannerURL = user.profileBannerURL {
+                bannerImageView.setImageWithURL(profileBannerURL)
             }
         }
     }
