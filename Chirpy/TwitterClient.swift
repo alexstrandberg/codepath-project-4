@@ -17,6 +17,7 @@ enum JSONURLs: String {
     case Retweet = "1.1/statuses/retweet/"
     case PostTweet = "1.1/statuses/update.json?status="
     case Mentions = "1.1/statuses/mentions_timeline.json"
+    case UnRetweet = "1.1/statuses/unretweet/"
 }
 
 enum TokenURLs: String {
@@ -145,8 +146,20 @@ class TwitterClient: BDBOAuth1SessionManager {
         }
     }
     
-    func postTweet(message: String, success: (Tweet) -> (), failure: NSError -> ()) {
-        let url = JSONURLs.PostTweet.rawValue + message.stringByAddingPercentEncodingForRFC3986()!
+    func unretweet(tweet: Tweet, success: (Tweet) -> (), failure: NSError -> ()) {
+        let url = JSONURLs.UnRetweet.rawValue + tweet.idStr! + ".json"
+        TwitterClient.sharedInstance.POST(url, parameters: nil, progress: nil, success: { (task: NSURLSessionDataTask, response: AnyObject?) in
+            success(Tweet(dictionary: response as! NSDictionary))
+        }) { (task: NSURLSessionDataTask?, error: NSError) in
+            failure(error)
+        }
+    }
+    
+    func postTweet(replyStatusID replyStatusID: String = "", message: String, success: (Tweet) -> (), failure: NSError -> ()) {
+        var url = JSONURLs.PostTweet.rawValue + message.stringByAddingPercentEncodingForRFC3986()!
+        if replyStatusID != "" {
+            url += "&in_reply_to_status_id=" + replyStatusID
+        }
         TwitterClient.sharedInstance.POST(url, parameters: nil, progress: nil, success: { (task: NSURLSessionDataTask, response: AnyObject?) in
             success(Tweet(dictionary: response as! NSDictionary))
         }) { (task: NSURLSessionDataTask?, error: NSError) in

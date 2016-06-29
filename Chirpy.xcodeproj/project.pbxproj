@@ -36,6 +36,7 @@
 		CFD972C61D231C89008B6667 /* retweetOnHover.png in Resources */ = {isa = PBXBuildFile; fileRef = CFD972BB1D231C89008B6667 /* retweetOnHover.png */; };
 		CFD972C71D231C89008B6667 /* retweetOnPressed.png in Resources */ = {isa = PBXBuildFile; fileRef = CFD972BC1D231C89008B6667 /* retweetOnPressed.png */; };
 		CFD972C81D231C89008B6667 /* retweetPressed.png in Resources */ = {isa = PBXBuildFile; fileRef = CFD972BD1D231C89008B6667 /* retweetPressed.png */; };
+		CFDF3AF01D247874007F4FF0 /* twitterIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = CFDF3AEF1D247874007F4FF0 /* twitterIcon.png */; };
 		D600DA05034FE8E375B87075 /* Pods_Chirpy.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7B59C74F66643507D1BC377D /* Pods_Chirpy.framework */; };
 /* End PBXBuildFile section */
 
@@ -72,6 +73,7 @@
 		CFD972BB1D231C89008B6667 /* retweetOnHover.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = retweetOnHover.png; sourceTree = "<group>"; };
 		CFD972BC1D231C89008B6667 /* retweetOnPressed.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = retweetOnPressed.png; sourceTree = "<group>"; };
 		CFD972BD1D231C89008B6667 /* retweetPressed.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = retweetPressed.png; sourceTree = "<group>"; };
+		CFDF3AEF1D247874007F4FF0 /* twitterIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = twitterIcon.png; sourceTree = "<group>"; };
 		E048846F38B56A9B86CAF222 /* Pods-Chirpy.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Chirpy.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Chirpy/Pods-Chirpy.debug.xcconfig"; sourceTree = "<group>"; };
 		EA08833714F3824B65084EEA /* Pods-Chirpy.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Chirpy.release.xcconfig"; path = "Pods/Target Support Files/Pods-Chirpy/Pods-Chirpy.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -179,6 +181,7 @@
 				CF85BC531D2341AF009112E8 /* imagePlaceholder.png */,
 				CF85BC551D234F20009112E8 /* user.png */,
 				CF8AF8801D2387AA00760096 /* atSign.png */,
+				CFDF3AEF1D247874007F4FF0 /* twitterIcon.png */,
 			);
 			name = Images;
 			path = ..;
@@ -280,6 +283,7 @@
 				CFD972C61D231C89008B6667 /* retweetOnHover.png in Resources */,
 				CFD972B21D2314B4008B6667 /* Main.storyboard in Resources */,
 				CF8AF8811D2387AA00760096 /* atSign.png in Resources */,
+				CFDF3AF01D247874007F4FF0 /* twitterIcon.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

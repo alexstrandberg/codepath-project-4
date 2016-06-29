@@ -11,7 +11,7 @@ import TTTAttributedLabel
 
 class DetailViewController: UIViewController, TTTAttributedLabelDelegate {
     
-    @IBOutlet weak var profileImageView: UIImageView!
+    @IBOutlet weak var profileButton: UIButton!
     @IBOutlet weak var usernameLabel: UILabel!
     @IBOutlet weak var screenNameLabel: UILabel!
     @IBOutlet weak var timestampLabel: UILabel!
@@ -51,8 +51,10 @@ class DetailViewController: UIViewController, TTTAttributedLabelDelegate {
             usernameLabel.text = tweet.user?.name
             
             if let profileURL = tweet.user?.profileURL {
-                
-                profileImageView.setImageWithURL(profileURL)
+                let data = NSData(contentsOfURL: profileURL)
+                if let data = data {
+                    profileButton.setImage(UIImage(data: data), forState: .Normal)
+                }
             }
             
             if let screenname = tweet.user?.screenname {
@@ -88,10 +90,6 @@ class DetailViewController: UIViewController, TTTAttributedLabelDelegate {
             }
         }
     }
-    
-    @IBAction func replyButtonPressed(sender: UIButton) {
-        
-    }
 
     @IBAction func retweetButtonPressed(sender: UIButton) {
         if !sender.selected {
@@ -99,6 +97,12 @@ class DetailViewController: UIViewController, TTTAttributedLabelDelegate {
                 self.updateView()
             }, failure: { (error: NSError) in
                 print(error.localizedDescription)
+            })
+        } else {
+            tweet!.unretweet({
+                self.updateView()
+                }, failure: { (error: NSError) in
+                    print(error.localizedDescription)
             })
         }
     }
@@ -123,14 +127,24 @@ class DetailViewController: UIViewController, TTTAttributedLabelDelegate {
         UIApplication.sharedApplication().openURL(url)
     }
     
-    /*
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         // Get the new view controller using segue.destinationViewController.
         // Pass the selected object to the new view controller.
+        if segue.identifier == "replySegue" {
+            let vc = segue.destinationViewController as! ComposeViewController
+            vc.replyUsername = tweet?.user?.name
+            vc.replyScreenname = tweet?.user?.screenname
+            vc.replyStatusID = (tweet?.idStr)!
+        } else if segue.identifier == "showProfileFromDetailView" {
+            if let tweet = tweet {
+                let navigationController = segue.destinationViewController as! UINavigationController
+                let vc = navigationController.topViewController as! ProfileViewController
+                vc.user = tweet.user
+            }
+        }
     }
-    */
 
 }

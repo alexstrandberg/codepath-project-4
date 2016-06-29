@@ -16,11 +16,16 @@ class ComposeViewController: UIViewController, UITextViewDelegate {
     @IBOutlet weak var tweetTextView: UITextView!
     @IBOutlet weak var charactersLeftLabel: UILabel!
     @IBOutlet weak var tweetButton: UIButton!
+    @IBOutlet weak var composeLabel: UILabel!
     
     let tweetPlaceholder = "What's happening?"
     let characterLimit = 140
     
     weak var delegate: ComposeViewControllerDelegate?
+    
+    var replyStatusID: String = ""
+    var replyUsername: String?
+    var replyScreenname: String?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -31,6 +36,12 @@ class ComposeViewController: UIViewController, UITextViewDelegate {
         tweetTextView.text = tweetPlaceholder
         tweetTextView.textColor = UIColor.lightGrayColor()
         tweetTextView.delegate = self
+        
+        if let replyUsername = replyUsername, let replyScreenname = replyScreenname {
+            tweetTextView.text = "@" + replyScreenname + " "
+            composeLabel.text = "Reply to " + replyUsername
+            tweetTextView.textColor = UIColor.blackColor()
+        }
     }
 
     override func didReceiveMemoryWarning() {
@@ -65,6 +76,14 @@ class ComposeViewController: UIViewController, UITextViewDelegate {
         } else {
             toggleButton(false)
         }
+        
+        if let replyScreenname = replyScreenname, replyUsername = replyUsername {
+            if textView.text.containsString("@"+replyScreenname+" ") {
+                composeLabel.text = "Reply to " + replyUsername
+            } else {
+                composeLabel.text = "Compose Tweet"
+            }
+        }
     }
     
     @IBAction func tapped(sender: UITapGestureRecognizer) {
@@ -72,7 +91,7 @@ class ComposeViewController: UIViewController, UITextViewDelegate {
     }
 
     @IBAction func postTweet(sender: UIButton) {
-        TwitterClient.sharedInstance.postTweet(tweetTextView.text, success: { (tweet: Tweet) in
+        TwitterClient.sharedInstance.postTweet(replyStatusID: replyStatusID, message: tweetTextView.text, success: { (tweet: Tweet) in
             self.delegate?.didPostTweet(tweet)
             self.dismissViewControllerAnimated(true, completion: nil)
         }) { (error: NSError) in
