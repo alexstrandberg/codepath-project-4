@@ -158,4 +158,14 @@ class Tweet: NSObject {
             failure(error)
         }
     }
+    
+    func unretweet(success: () -> (), failure: (NSError) -> ()) {
+        TwitterClient.sharedInstance.unretweet(self, success: { (tweet: Tweet) in
+            self.retweetCount = tweet.retweetCount
+            self.retweeted = tweet.retweeted
+            success()
+        }) { (error: NSError) in
+            failure(error)
+        }
+    }
 }

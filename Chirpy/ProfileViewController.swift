@@ -33,6 +33,10 @@ class ProfileViewController: UIViewController {
             navigationItem.leftBarButtonItem = nil
         }
         
+        if user == nil {
+            user = User.currentUser
+        }
+        
         if let user = user {
             nameLabel.text = user.name
             
@@ -41,7 +45,6 @@ class ProfileViewController: UIViewController {
             }
             
             if let profileURL = user.profileURL {
-                
                 imageView.setImageWithURL(profileURL)
             }
             
