@@ -8,6 +8,10 @@
 
 import UIKit
 
+protocol ComposeViewControllerDelegate : class {
+    func didPostTweet(tweet: Tweet)
+}
+
 class ComposeViewController: UIViewController, UITextViewDelegate {
     @IBOutlet weak var tweetTextView: UITextView!
     @IBOutlet weak var charactersLeftLabel: UILabel!
@@ -15,6 +19,8 @@ class ComposeViewController: UIViewController, UITextViewDelegate {
     
     let tweetPlaceholder = "What's happening?"
     let characterLimit = 140
+    
+    weak var delegate: ComposeViewControllerDelegate?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -46,7 +52,6 @@ class ComposeViewController: UIViewController, UITextViewDelegate {
             textView.textColor = UIColor.lightGrayColor()
         }
         textView.resignFirstResponder()
-        toggleButton(false)
     }
     
     func textViewDidChange(textView: UITextView) {
@@ -68,7 +73,7 @@ class ComposeViewController: UIViewController, UITextViewDelegate {
 
     @IBAction func postTweet(sender: UIButton) {
         TwitterClient.sharedInstance.postTweet(tweetTextView.text, success: { (tweet: Tweet) in
-            print(tweet.text)
+            self.delegate?.didPostTweet(tweet)
             self.dismissViewControllerAnimated(true, completion: nil)
         }) { (error: NSError) in
             print(error.localizedDescription)

@@ -9,4 +9,5 @@ target 'Chirpy' do
   pod 'AFNetworking'
   pod 'BDBOAuth1Manager'
   pod 'MBProgressHUD'
+  pod 'TTTAttributedLabel'
 end

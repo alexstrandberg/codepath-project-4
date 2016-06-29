@@ -20,6 +20,8 @@ class ProfileViewController: UIViewController {
     
     var user: User?
     
+    let profileTabIndex = 2
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -27,8 +29,8 @@ class ProfileViewController: UIViewController {
         
         navigationItem.title = "View Profile"
         
-        if tabBarController?.selectedIndex == 1 {
-            exitButton.enabled = false
+        if tabBarController?.selectedIndex == profileTabIndex {
+            navigationItem.leftBarButtonItem = nil
         }
         
         if let user = user {
@@ -68,7 +70,7 @@ class ProfileViewController: UIViewController {
     }
     
     @IBAction func exitPressed(sender: AnyObject) {
-        if tabBarController?.selectedIndex != 1 {
+        if tabBarController?.selectedIndex != profileTabIndex {
             dismissViewControllerAnimated(true, completion: nil)
         }
     }

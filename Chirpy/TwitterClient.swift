@@ -16,6 +16,7 @@ enum JSONURLs: String {
     case Unfavorite = "1.1/favorites/destroy.json?id="
     case Retweet = "1.1/statuses/retweet/"
     case PostTweet = "1.1/statuses/update.json?status="
+    case Mentions = "1.1/statuses/mentions_timeline.json"
 }
 
 enum TokenURLs: String {
@@ -27,6 +28,15 @@ enum TokenURLs: String {
 enum Observers: String {
     case Logout = "UserDidLogout"
     case Login = "UserDidLogin"
+}
+
+extension String {
+    func stringByAddingPercentEncodingForRFC3986() -> String? {
+        let unreserved = "-._~/?"
+        let allowed = NSMutableCharacterSet.alphanumericCharacterSet()
+        allowed.addCharactersInString(unreserved)
+        return stringByAddingPercentEncodingWithAllowedCharacters(allowed)
+    }
 }
 
 class TwitterClient: BDBOAuth1SessionManager {
@@ -118,11 +128,21 @@ class TwitterClient: BDBOAuth1SessionManager {
     }
     
     func postTweet(message: String, success: (Tweet) -> (), failure: NSError -> ()) {
-        let url = JSONURLs.PostTweet.rawValue + message
+        let url = JSONURLs.PostTweet.rawValue + message.stringByAddingPercentEncodingForRFC3986()!
         TwitterClient.sharedInstance.POST(url, parameters: nil, progress: nil, success: { (task: NSURLSessionDataTask, response: AnyObject?) in
             success(Tweet(dictionary: response as! NSDictionary))
         }) { (task: NSURLSessionDataTask?, error: NSError) in
             failure(error)
         }
+    }
+    
+    func mentionsTimeline(success: [Tweet] -> (), failure: NSError -> ()) {
+        TwitterClient.sharedInstance.GET(JSONURLs.Mentions.rawValue, parameters: nil, progress: nil, success: {(task: NSURLSessionDataTask, response: AnyObject?) -> Void in
+            let dictionaries = response as! [NSDictionary]
+            let tweets = Tweet.tweetsWithArray(dictionaries)
+            success(tweets)
+            }, failure: { (task: NSURLSessionDataTask?, error: NSError) -> Void in
+                failure(error)
+        })
     }
 }

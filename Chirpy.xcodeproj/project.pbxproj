@@ -19,6 +19,7 @@
 		CF85BC521D234064009112E8 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF85BC511D234064009112E8 /* ProfileViewController.swift */; };
 		CF85BC541D2341AF009112E8 /* imagePlaceholder.png in Resources */ = {isa = PBXBuildFile; fileRef = CF85BC531D2341AF009112E8 /* imagePlaceholder.png */; };
 		CF85BC561D234F20009112E8 /* user.png in Resources */ = {isa = PBXBuildFile; fileRef = CF85BC551D234F20009112E8 /* user.png */; };
+		CF8AF8811D2387AA00760096 /* atSign.png in Resources */ = {isa = PBXBuildFile; fileRef = CF8AF8801D2387AA00760096 /* atSign.png */; };
 		CFB0639F1D22D5D500713B9C /* ComposeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFB0639E1D22D5D500713B9C /* ComposeViewController.swift */; };
 		CFBEE3DE1D2222F70009A497 /* home.png in Resources */ = {isa = PBXBuildFile; fileRef = CFBEE3DD1D2222F70009A497 /* home.png */; };
 		CFBEE3E31D2227F70009A497 /* TimelineCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFBEE3E21D2227F70009A497 /* TimelineCell.swift */; };
@@ -53,6 +54,7 @@
 		CF85BC511D234064009112E8 /* ProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		CF85BC531D2341AF009112E8 /* imagePlaceholder.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = imagePlaceholder.png; sourceTree = "<group>"; };
 		CF85BC551D234F20009112E8 /* user.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = user.png; sourceTree = "<group>"; };
+		CF8AF8801D2387AA00760096 /* atSign.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = atSign.png; sourceTree = "<group>"; };
 		CFB0639E1D22D5D500713B9C /* ComposeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ComposeViewController.swift; sourceTree = "<group>"; };
 		CFBEE3DD1D2222F70009A497 /* home.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = home.png; path = Chirpy/home.png; sourceTree = "<group>"; };
 		CFBEE3E21D2227F70009A497 /* TimelineCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimelineCell.swift; sourceTree = "<group>"; };
@@ -165,6 +167,7 @@
 				CFBEE3DD1D2222F70009A497 /* home.png */,
 				CF85BC531D2341AF009112E8 /* imagePlaceholder.png */,
 				CF85BC551D234F20009112E8 /* user.png */,
+				CF8AF8801D2387AA00760096 /* atSign.png */,
 			);
 			name = Images;
 			sourceTree = "<group>";
@@ -264,6 +267,7 @@
 				CF85BC561D234F20009112E8 /* user.png in Resources */,
 				CFD972C61D231C89008B6667 /* retweetOnHover.png in Resources */,
 				CFD972B21D2314B4008B6667 /* Main.storyboard in Resources */,
+				CF8AF8811D2387AA00760096 /* atSign.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

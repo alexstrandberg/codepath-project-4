@@ -7,13 +7,14 @@
 //
 
 import UIKit
+import TTTAttributedLabel
 
 class TimelineCell: UITableViewCell {
     @IBOutlet weak var profileButton: UIButton!
     @IBOutlet weak var usernameLabel: UILabel!
     @IBOutlet weak var screenNameLabel: UILabel!
     @IBOutlet weak var timestampLabel: UILabel!
-    @IBOutlet weak var tweetText: UITextView!
+    @IBOutlet weak var tweetText: TTTAttributedLabel!
     
     override func awakeFromNib() {
         super.awakeFromNib()
