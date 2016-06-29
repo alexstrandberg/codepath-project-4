@@ -8,6 +8,33 @@
 
 import UIKit
 
+extension String {
+    // Taken from: http://stackoverflow.com/a/34245313
+    init(htmlEncodedString: String) {
+        if let encodedData = htmlEncodedString.dataUsingEncoding(NSUTF8StringEncoding){
+            let attributedOptions : [String: AnyObject] = [
+                NSDocumentTypeDocumentAttribute: NSHTMLTextDocumentType,
+                NSCharacterEncodingDocumentAttribute: NSUTF8StringEncoding
+            ]
+            
+            do{
+                if let attributedString:NSAttributedString = try NSAttributedString(data: encodedData, options: attributedOptions, documentAttributes: nil){
+                    self.init(attributedString.string)
+                }else{
+                    print("error")
+                    self.init(htmlEncodedString)     //Returning actual string if there is an error
+                }
+            }catch{
+                print("error: \(error)")
+                self.init(htmlEncodedString)     //Returning actual string if there is an error
+            }
+            
+        }else{
+            self.init(htmlEncodedString)     //Returning actual string if there is an error
+        }
+    }
+}
+
 class Tweet: NSObject {
     var text: String?
     var timestamp: NSDate?
@@ -31,6 +58,9 @@ class Tweet: NSObject {
     
     init (dictionary: NSDictionary) {
         text = dictionary[TweetKeys.Text.rawValue] as? String
+        if let text = text {
+            self.text = String(htmlEncodedString: text)
+        }
         
         retweetCount = dictionary[TweetKeys.RetweetCount.rawValue] as? Int ?? 0
         favoritesCount = dictionary[TweetKeys.FavoritesCount.rawValue] as? Int ?? 0

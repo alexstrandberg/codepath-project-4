@@ -15,6 +15,7 @@
 		CF2120FB1D21C83100068D8F /* Tweet.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF2120FA1D21C83100068D8F /* Tweet.swift */; };
 		CF2120FD1D21C8CE00068D8F /* TwitterClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF2120FC1D21C8CE00068D8F /* TwitterClient.swift */; };
 		CF2120FF1D21E7B800068D8F /* TimelineViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF2120FE1D21E7B800068D8F /* TimelineViewController.swift */; };
+		CF6C00051D2428E1005201C8 /* InfiniteScrollActivityView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF6C00041D2428E1005201C8 /* InfiniteScrollActivityView.swift */; };
 		CF70E19C1D23112D00782560 /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF70E19B1D23112D00782560 /* DetailViewController.swift */; };
 		CF85BC521D234064009112E8 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF85BC511D234064009112E8 /* ProfileViewController.swift */; };
 		CF85BC541D2341AF009112E8 /* imagePlaceholder.png in Resources */ = {isa = PBXBuildFile; fileRef = CF85BC531D2341AF009112E8 /* imagePlaceholder.png */; };
@@ -50,6 +51,7 @@
 		CF2120FA1D21C83100068D8F /* Tweet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Tweet.swift; sourceTree = "<group>"; };
 		CF2120FC1D21C8CE00068D8F /* TwitterClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TwitterClient.swift; sourceTree = "<group>"; };
 		CF2120FE1D21E7B800068D8F /* TimelineViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimelineViewController.swift; sourceTree = "<group>"; };
+		CF6C00041D2428E1005201C8 /* InfiniteScrollActivityView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InfiniteScrollActivityView.swift; sourceTree = "<group>"; };
 		CF70E19B1D23112D00782560 /* DetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
 		CF85BC511D234064009112E8 /* ProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		CF85BC531D2341AF009112E8 /* imagePlaceholder.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = imagePlaceholder.png; sourceTree = "<group>"; };
@@ -89,7 +91,6 @@
 		CF1BEF4F1D21BC4100BF0064 = {
 			isa = PBXGroup;
 			children = (
-				CFBEE3DF1D2222FB0009A497 /* Images */,
 				CF1BEF5A1D21BC4100BF0064 /* Chirpy */,
 				CF1BEF591D21BC4100BF0064 /* Products */,
 				F503CAA26F925A6802466DFF /* Pods */,
@@ -108,6 +109,8 @@
 		CF1BEF5A1D21BC4100BF0064 /* Chirpy */ = {
 			isa = PBXGroup;
 			children = (
+				CF6C00031D2428CA005201C8 /* Views */,
+				CFBEE3DF1D2222FB0009A497 /* Images */,
 				CF2120F71D21C7D100068D8F /* API */,
 				CF2120F61D21C7C800068D8F /* Models */,
 				CF2120F51D21C7C100068D8F /* View Controllers */,
@@ -150,6 +153,14 @@
 			name = API;
 			sourceTree = "<group>";
 		};
+		CF6C00031D2428CA005201C8 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				CF6C00041D2428E1005201C8 /* InfiniteScrollActivityView.swift */,
+			);
+			name = Views;
+			sourceTree = "<group>";
+		};
 		CFBEE3DF1D2222FB0009A497 /* Images */ = {
 			isa = PBXGroup;
 			children = (
@@ -170,6 +181,7 @@
 				CF8AF8801D2387AA00760096 /* atSign.png */,
 			);
 			name = Images;
+			path = ..;
 			sourceTree = "<group>";
 		};
 		F267DCE2A6FB2D3017287C91 /* Frameworks */ = {
@@ -331,6 +343,7 @@
 				CF85BC521D234064009112E8 /* ProfileViewController.swift in Sources */,
 				CFBEE3E31D2227F70009A497 /* TimelineCell.swift in Sources */,
 				CF1BEF5E1D21BC4100BF0064 /* LoginViewController.swift in Sources */,
+				CF6C00051D2428E1005201C8 /* InfiniteScrollActivityView.swift in Sources */,
 				CFB0639F1D22D5D500713B9C /* ComposeViewController.swift in Sources */,
 				CF1BEF5C1D21BC4100BF0064 /* AppDelegate.swift in Sources */,
 				CF2120F91D21C7EF00068D8F /* User.swift in Sources */,
