@@ -22,10 +22,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func showTabBarController() {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        
         let homeNavigationController = storyboard.instantiateViewControllerWithIdentifier("TimelineNavigationController") as! UINavigationController
         homeNavigationController.tabBarItem.title = "Home"
         homeNavigationController.tabBarItem.image = UIImage(named: "home")
-        //let homeViewController = homeNavigationController.topViewController as! TimelineViewController
+        let homeViewController = homeNavigationController.topViewController as! TimelineViewController
+        homeViewController.timelineType = "home"
+        
+        let mentionsNavigationController = storyboard.instantiateViewControllerWithIdentifier("TimelineNavigationController") as! UINavigationController
+        mentionsNavigationController.tabBarItem.title = "Mentions"
+        mentionsNavigationController.tabBarItem.image = UIImage(named: "atSign")
+        let mentionsViewController = mentionsNavigationController.topViewController as! TimelineViewController
+        mentionsViewController.timelineType = "mentions"
         
         let profileNavigationController = storyboard.instantiateViewControllerWithIdentifier("ProfileNavigationController") as! UINavigationController
         profileNavigationController.tabBarItem.title = "Me"
@@ -34,7 +42,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         profileViewController.user = User.currentUser
         
         let tabBarController = UITabBarController()
-        tabBarController.viewControllers = [homeNavigationController, profileNavigationController]
+        tabBarController.viewControllers = [homeNavigationController, mentionsNavigationController, profileNavigationController]
         
         window?.rootViewController = tabBarController
         window?.makeKeyAndVisible()

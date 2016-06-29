@@ -8,12 +8,13 @@
 
 import UIKit
 import MBProgressHUD
+import TTTAttributedLabel
 
-class TimelineViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+class TimelineViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, TTTAttributedLabelDelegate, ComposeViewControllerDelegate {
     @IBOutlet weak var tableView: UITableView!
     
     let CellIdentifier = "TimelineCell"
-    let CellHeightEstimate: CGFloat = 87
+    let CellHeightEstimate: CGFloat = 80
     
     var tweets = [Tweet]() {
         didSet {
@@ -24,6 +25,8 @@ class TimelineViewController: UIViewController, UITableViewDelegate, UITableView
     var isFirstLoad = true
     let refreshControl = UIRefreshControl()
     
+    var timelineType = "home"
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
@@ -32,6 +35,10 @@ class TimelineViewController: UIViewController, UITableViewDelegate, UITableView
         tableView.delegate = self
         tableView.estimatedRowHeight = CellHeightEstimate
         tableView.rowHeight = UITableViewAutomaticDimension
+        
+        if timelineType != "home" {
+            navigationItem.rightBarButtonItem = nil
+        }
         
         // Initialize a UIRefreshControl
         refreshControl.addTarget(self, action: #selector(refreshControlAction(_:)), forControlEvents: UIControlEvents.ValueChanged)
@@ -60,19 +67,17 @@ class TimelineViewController: UIViewController, UITableViewDelegate, UITableView
         cell.usernameLabel.text = tweet.user?.name
         
         if let profileURL = tweet.user?.profileURL {
-            let tempImageView = UIImageView(frame: CGRect(x: 0, y: 0, width: 50, height: 50))
-            tempImageView.setImageWithURLRequest(NSURLRequest(URL: profileURL), placeholderImage: nil, success: { (request: NSURLRequest, response: NSHTTPURLResponse?, image: UIImage) in
-                cell.profileButton.setImage(image, forState: .Normal)
-                cell.profileButton.selected = false
-            }, failure: { (request: NSURLRequest, response:NSHTTPURLResponse?, error: NSError) in
-                print(error.localizedDescription)
-            })
+            let data = NSData(contentsOfURL: profileURL)!
+            cell.profileButton.setImage(UIImage(data: data), forState: .Normal)
         }
         cell.profileButton.tag = indexPath.row
         
         if let screenname = tweet.user?.screenname {
             cell.screenNameLabel.text = "@" + screenname
         }
+        
+        cell.tweetText.enabledTextCheckingTypes = NSTextCheckingType.Link.rawValue
+        cell.tweetText.delegate = self
         
         cell.tweetText.text = tweet.text
         
@@ -81,6 +86,10 @@ class TimelineViewController: UIViewController, UITableViewDelegate, UITableView
         }
             
         return cell
+    }
+    
+    func attributedLabel(label: TTTAttributedLabel!, didSelectLinkWithURL url: NSURL!) {
+        UIApplication.sharedApplication().openURL(url)
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
@@ -93,12 +102,21 @@ class TimelineViewController: UIViewController, UITableViewDelegate, UITableView
             MBProgressHUD.showHUDAddedTo(self.view, animated: true)
         }
         
-        TwitterClient.sharedInstance.homeTimeline({ (tweets: [Tweet]) in
-            self.tweets = []
-            self.tweets.appendContentsOf(tweets)
-            }, failure: { (error: NSError) in
-                print(error.localizedDescription)
-        })
+        if timelineType != "mentions" {
+            TwitterClient.sharedInstance.homeTimeline({ (tweets: [Tweet]) in
+                self.tweets = []
+                self.tweets.appendContentsOf(tweets)
+                }, failure: { (error: NSError) in
+                    print(error.localizedDescription)
+            })
+        } else {
+            TwitterClient.sharedInstance.mentionsTimeline({ (tweets: [Tweet]) in
+                self.tweets = []
+                self.tweets.appendContentsOf(tweets)
+                }, failure: { (error: NSError) in
+                    print(error.localizedDescription)
+            })
+        }
         
         refreshControl.endRefreshing()
         if self.isFirstLoad {
@@ -110,6 +128,10 @@ class TimelineViewController: UIViewController, UITableViewDelegate, UITableView
     
     func showProfile(sender: UIButton) {
         performSegueWithIdentifier("profileSegue", sender: sender)
+    }
+    
+    func didPostTweet(tweet: Tweet) {
+        tweets.insert(tweet, atIndex: 0)
     }
     
     // MARK: - Navigation
@@ -130,6 +152,9 @@ class TimelineViewController: UIViewController, UITableViewDelegate, UITableView
             let vc = navigationController.topViewController as! ProfileViewController
             let button = sender as! UIButton
             vc.user = tweets[button.tag].user
+        } else if segue.identifier == "composeSegue" {
+            let vc = segue.destinationViewController as! ComposeViewController
+            vc.delegate = self
         }
     }
 }

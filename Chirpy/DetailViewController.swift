@@ -7,14 +7,15 @@
 //
 
 import UIKit
+import TTTAttributedLabel
 
-class DetailViewController: UIViewController {
+class DetailViewController: UIViewController, TTTAttributedLabelDelegate {
     
     @IBOutlet weak var profileImageView: UIImageView!
     @IBOutlet weak var usernameLabel: UILabel!
     @IBOutlet weak var screenNameLabel: UILabel!
     @IBOutlet weak var timestampLabel: UILabel!
-    @IBOutlet weak var tweetText: UITextView!
+    @IBOutlet weak var tweetText: TTTAttributedLabel!
     @IBOutlet weak var retweetLabel: UILabel!
     @IBOutlet weak var favoriteLabel: UILabel!
     @IBOutlet weak var replyButton: UIButton!
@@ -58,6 +59,8 @@ class DetailViewController: UIViewController {
                 screenNameLabel.text = "@" + screenname
             }
             
+            tweetText.enabledTextCheckingTypes = NSTextCheckingType.Link.rawValue
+            tweetText.delegate = self
             tweetText.text = tweet.text
             
             if let timestamp = tweet.timestamp {
@@ -114,6 +117,10 @@ class DetailViewController: UIViewController {
                     print(error.localizedDescription)
             })
         }
+    }
+    
+    func attributedLabel(label: TTTAttributedLabel!, didSelectLinkWithURL url: NSURL!) {
+        UIApplication.sharedApplication().openURL(url)
     }
     
     /*

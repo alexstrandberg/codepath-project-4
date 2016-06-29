@@ -4,7 +4,7 @@ Chirpy is a basic Twitter app to read and compose tweets the [Twitter API](https
 
 Submitted by: Alexander Strandberg
 
-Time spent: 13 hours spent in total
+Time spent: 15 hours spent in total
 
 ## User Stories
 
@@ -31,10 +31,10 @@ The following **optional** features are implemented:
 - [ ] User can load more tweets once they reach the bottom of the feed using infinite loading similar to the actual Twitter client.
 - [ ] User should be able to unretweet and unfavorite and should decrement the retweet and favorite count.
 - [X] When composing, you should have a countdown in the upper right for the tweet limit.
-- [ ] After creating a new tweet, a user should be able to view it in the timeline immediately without refetching the timeline from the network.
+- [X] After creating a new tweet, a user should be able to view it in the timeline immediately without refetching the timeline from the network.
 - [ ] User can reply to any tweet, and replies should be prefixed with the username and the reply_id should be set when posting the tweet
 - [X] Links in tweets are clickable
-- [ ] User can switch between timeline, mentions, or profile view through a tab bar
+- [X] User can switch between timeline, mentions, or profile view through a tab bar
 - [ ] Pulling down the profile page should blur and resize the header image.
 - [ ] Profile view should include that user's timeline
 
@@ -66,10 +66,12 @@ List an 3rd party libraries, icons, graphics, or other assets you used in your a
 - [AFNetworking](https://github.com/AFNetworking/AFNetworking) - networking task library
 - [MBProgressHUD](https://cocoapods.org/pods/MBProgressHUD) - progress indicator library
 - [BDBOAuth1Manager](https://github.com/bdbergeron/BDBOAuth1Manager) - OAuth library
+- [TTTAttributedLabel](https://github.com/TTTAttributedLabel/TTTAttributedLabel) - Custom UILabel library
 - [IconMonstr - Home 7](http://iconmonstr.com/home-7)
 - [swift-timeago](https://github.com/zemirco/swift-timeago) - Code adapted from function that displays relative timestamp
 - [IconMonstr - User 6](http://iconmonstr.com/user-6)
 - [IconMonstr - Picture 1](http://iconmonstr.com/picture-1)
+- [stringByAddingPercentEncodingForRFC3986](http://useyourloaf.com/blog/how-to-percent-encode-a-url-string/) - Code snippet for posting tweets using proper encoding
 
 ## License
 
