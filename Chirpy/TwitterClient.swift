@@ -31,12 +31,13 @@ enum Observers: String {
 }
 
 extension String {
+    // Taken from: http://useyourloaf.com/blog/how-to-percent-encode-a-url-string/
     func stringByAddingPercentEncodingForRFC3986() -> String? {
         let unreserved = "-._~/?"
         let allowed = NSMutableCharacterSet.alphanumericCharacterSet()
         allowed.addCharactersInString(unreserved)
         return stringByAddingPercentEncodingWithAllowedCharacters(allowed)
-    }
+    }    
 }
 
 class TwitterClient: BDBOAuth1SessionManager {
@@ -79,11 +80,28 @@ class TwitterClient: BDBOAuth1SessionManager {
         })
     }
     
-    func homeTimeline(success: [Tweet] -> (), failure: NSError -> ()) {
-        TwitterClient.sharedInstance.GET(JSONURLs.Timeline.rawValue, parameters: nil, progress: nil, success: {(task: NSURLSessionDataTask, response: AnyObject?) -> Void in
+    func timeline(maxID: String = "", timelineType: String = "home", success: ([Tweet], Bool) -> (), failure: NSError -> ()) {
+        var url = ""
+        var shouldClearArray = true
+        if timelineType == "home" {
+            url = JSONURLs.Timeline.rawValue
+        } else if timelineType == "mentions" {
+            url = JSONURLs.Mentions.rawValue
+        }
+        
+        if maxID != "" {
+            url += "?max_id="+maxID
+            url += "&count=21" // First tweet returned will be a duplicate
+            shouldClearArray = false
+        }
+        
+        TwitterClient.sharedInstance.GET(url, parameters: nil, progress: nil, success: {(task: NSURLSessionDataTask, response: AnyObject?) -> Void in
                 let dictionaries = response as! [NSDictionary]
-                let tweets = Tweet.tweetsWithArray(dictionaries)
-                success(tweets)
+                var tweets = Tweet.tweetsWithArray(dictionaries)
+                if maxID != "" {
+                    tweets.removeAtIndex(0) // If loading more tweets into existing tableView, remove the first tweet (duplicated)
+                }
+                success(tweets, shouldClearArray)
             }, failure: { (task: NSURLSessionDataTask?, error: NSError) -> Void in
                 failure(error)
         })
@@ -134,15 +152,5 @@ class TwitterClient: BDBOAuth1SessionManager {
         }) { (task: NSURLSessionDataTask?, error: NSError) in
             failure(error)
         }
-    }
-    
-    func mentionsTimeline(success: [Tweet] -> (), failure: NSError -> ()) {
-        TwitterClient.sharedInstance.GET(JSONURLs.Mentions.rawValue, parameters: nil, progress: nil, success: {(task: NSURLSessionDataTask, response: AnyObject?) -> Void in
-            let dictionaries = response as! [NSDictionary]
-            let tweets = Tweet.tweetsWithArray(dictionaries)
-            success(tweets)
-            }, failure: { (task: NSURLSessionDataTask?, error: NSError) -> Void in
-                failure(error)
-        })
     }
 }

@@ -10,7 +10,7 @@ import UIKit
 import MBProgressHUD
 import TTTAttributedLabel
 
-class TimelineViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, TTTAttributedLabelDelegate, ComposeViewControllerDelegate {
+class TimelineViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, TTTAttributedLabelDelegate, ComposeViewControllerDelegate, UIScrollViewDelegate {
     @IBOutlet weak var tableView: UITableView!
     
     let CellIdentifier = "TimelineCell"
@@ -23,6 +23,10 @@ class TimelineViewController: UIViewController, UITableViewDelegate, UITableView
     }
     
     var isFirstLoad = true
+    var isMoreDataLoading = false
+    
+    var loadingMoreView:InfiniteScrollActivityView?
+    
     let refreshControl = UIRefreshControl()
     
     var timelineType = "home"
@@ -45,6 +49,16 @@ class TimelineViewController: UIViewController, UITableViewDelegate, UITableView
         //tableView.insertSubview(networkErrorView, atIndex: 0)
         tableView.insertSubview(refreshControl, atIndex: 0)
         refreshControlAction(refreshControl)
+        
+        // Set up Infinite Scroll loading indicator
+        let frame = CGRectMake(0, tableView.contentSize.height, tableView.bounds.size.width, InfiniteScrollActivityView.defaultHeight)
+        loadingMoreView = InfiniteScrollActivityView(frame: frame)
+        loadingMoreView!.hidden = true
+        tableView.addSubview(loadingMoreView!)
+        
+        var insets = tableView.contentInset;
+        insets.bottom += InfiniteScrollActivityView.defaultHeight;
+        tableView.contentInset = insets
     }
     
     override func didReceiveMemoryWarning() {
@@ -67,8 +81,10 @@ class TimelineViewController: UIViewController, UITableViewDelegate, UITableView
         cell.usernameLabel.text = tweet.user?.name
         
         if let profileURL = tweet.user?.profileURL {
-            let data = NSData(contentsOfURL: profileURL)!
-            cell.profileButton.setImage(UIImage(data: data), forState: .Normal)
+            let data = NSData(contentsOfURL: profileURL)
+            if let data = data {
+                cell.profileButton.setImage(UIImage(data: data), forState: .Normal)
+            }
         }
         cell.profileButton.tag = indexPath.row
         
@@ -102,28 +118,7 @@ class TimelineViewController: UIViewController, UITableViewDelegate, UITableView
             MBProgressHUD.showHUDAddedTo(self.view, animated: true)
         }
         
-        if timelineType != "mentions" {
-            TwitterClient.sharedInstance.homeTimeline({ (tweets: [Tweet]) in
-                self.tweets = []
-                self.tweets.appendContentsOf(tweets)
-                }, failure: { (error: NSError) in
-                    print(error.localizedDescription)
-            })
-        } else {
-            TwitterClient.sharedInstance.mentionsTimeline({ (tweets: [Tweet]) in
-                self.tweets = []
-                self.tweets.appendContentsOf(tweets)
-                }, failure: { (error: NSError) in
-                    print(error.localizedDescription)
-            })
-        }
-        
-        refreshControl.endRefreshing()
-        if self.isFirstLoad {
-            self.isFirstLoad = false
-            // Hide HUD once the network request comes back (must be done on main UI thread)
-            MBProgressHUD.hideHUDForView(self.view, animated: true)
-        }
+        loadMoreData()
     }
     
     func showProfile(sender: UIButton) {
@@ -133,6 +128,59 @@ class TimelineViewController: UIViewController, UITableViewDelegate, UITableView
     func didPostTweet(tweet: Tweet) {
         tweets.insert(tweet, atIndex: 0)
     }
+    
+    func scrollViewDidScroll(scrollView: UIScrollView) {
+        if (!isMoreDataLoading) {
+            // Calculate the position of one screen length before the bottom of the results
+            let scrollViewContentHeight = tableView.contentSize.height
+            let scrollOffsetThreshold = scrollViewContentHeight - tableView.bounds.size.height
+            
+            // When the user has scrolled past the threshold, start requesting
+            if(scrollView.contentOffset.y > scrollOffsetThreshold && tableView.dragging) {
+                isMoreDataLoading = true
+                
+                // Update position of loadingMoreView, and start loading indicator
+                let frame = CGRectMake(0, tableView.contentSize.height, tableView.bounds.size.width, InfiniteScrollActivityView.defaultHeight)
+                loadingMoreView?.frame = frame
+                loadingMoreView!.startAnimating()
+                
+                loadMoreData()
+            }
+        }
+    }
+    
+    func loadMoreData() {
+        var maxID = ""
+        if tweets.count > 0 {
+            maxID = tweets[tweets.count-1].idStr!
+        }
+        TwitterClient.sharedInstance.timeline(maxID, timelineType: timelineType, success: { (tweets: [Tweet], shouldClearArray: Bool) in
+            if shouldClearArray {
+                self.tweets = []
+            }
+            self.tweets.appendContentsOf(tweets)
+            self.doneLoading()
+        }, failure: { (error: NSError) in
+            print(error.localizedDescription)
+            self.doneLoading()
+        })
+    }
+    
+    func doneLoading() {
+        refreshControl.endRefreshing()
+        if isFirstLoad {
+            isFirstLoad = false
+            // Hide HUD once the network request comes back (must be done on main UI thread)
+            MBProgressHUD.hideHUDForView(self.view, animated: true)
+        }
+        
+        // Update flag
+        isMoreDataLoading = false
+        
+        // Stop the loading indicator
+        loadingMoreView!.stopAnimating()
+    }
+
     
     // MARK: - Navigation
     

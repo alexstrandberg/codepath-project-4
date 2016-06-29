@@ -4,7 +4,7 @@ Chirpy is a basic Twitter app to read and compose tweets the [Twitter API](https
 
 Submitted by: Alexander Strandberg
 
-Time spent: 15 hours spent in total
+Time spent: 16 hours spent in total
 
 ## User Stories
 
@@ -28,7 +28,7 @@ The following **required** functionality is completed:
 
 The following **optional** features are implemented:
 
-- [ ] User can load more tweets once they reach the bottom of the feed using infinite loading similar to the actual Twitter client.
+- [X] User can load more tweets once they reach the bottom of the feed using infinite loading similar to the actual Twitter client.
 - [ ] User should be able to unretweet and unfavorite and should decrement the retweet and favorite count.
 - [X] When composing, you should have a countdown in the upper right for the tweet limit.
 - [X] After creating a new tweet, a user should be able to view it in the timeline immediately without refetching the timeline from the network.
@@ -72,6 +72,7 @@ List an 3rd party libraries, icons, graphics, or other assets you used in your a
 - [IconMonstr - User 6](http://iconmonstr.com/user-6)
 - [IconMonstr - Picture 1](http://iconmonstr.com/picture-1)
 - [stringByAddingPercentEncodingForRFC3986](http://useyourloaf.com/blog/how-to-percent-encode-a-url-string/) - Code snippet for posting tweets using proper encoding
+- [init(htmlEncodedString: String)](http://stackoverflow.com/a/34245313) - Code snippet for making tweets display properly when there are HTML entities (ex: &amp;)
 
 ## License
 
