@@ -16,6 +16,9 @@
 		CF2120FD1D21C8CE00068D8F /* TwitterClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF2120FC1D21C8CE00068D8F /* TwitterClient.swift */; };
 		CF2120FF1D21E7B800068D8F /* TimelineViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF2120FE1D21E7B800068D8F /* TimelineViewController.swift */; };
 		CF70E19C1D23112D00782560 /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF70E19B1D23112D00782560 /* DetailViewController.swift */; };
+		CF85BC521D234064009112E8 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF85BC511D234064009112E8 /* ProfileViewController.swift */; };
+		CF85BC541D2341AF009112E8 /* imagePlaceholder.png in Resources */ = {isa = PBXBuildFile; fileRef = CF85BC531D2341AF009112E8 /* imagePlaceholder.png */; };
+		CF85BC561D234F20009112E8 /* user.png in Resources */ = {isa = PBXBuildFile; fileRef = CF85BC551D234F20009112E8 /* user.png */; };
 		CFB0639F1D22D5D500713B9C /* ComposeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFB0639E1D22D5D500713B9C /* ComposeViewController.swift */; };
 		CFBEE3DE1D2222F70009A497 /* home.png in Resources */ = {isa = PBXBuildFile; fileRef = CFBEE3DD1D2222F70009A497 /* home.png */; };
 		CFBEE3E31D2227F70009A497 /* TimelineCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFBEE3E21D2227F70009A497 /* TimelineCell.swift */; };
@@ -47,6 +50,9 @@
 		CF2120FC1D21C8CE00068D8F /* TwitterClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TwitterClient.swift; sourceTree = "<group>"; };
 		CF2120FE1D21E7B800068D8F /* TimelineViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimelineViewController.swift; sourceTree = "<group>"; };
 		CF70E19B1D23112D00782560 /* DetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
+		CF85BC511D234064009112E8 /* ProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
+		CF85BC531D2341AF009112E8 /* imagePlaceholder.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = imagePlaceholder.png; sourceTree = "<group>"; };
+		CF85BC551D234F20009112E8 /* user.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = user.png; sourceTree = "<group>"; };
 		CFB0639E1D22D5D500713B9C /* ComposeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ComposeViewController.swift; sourceTree = "<group>"; };
 		CFBEE3DD1D2222F70009A497 /* home.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = home.png; path = Chirpy/home.png; sourceTree = "<group>"; };
 		CFBEE3E21D2227F70009A497 /* TimelineCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimelineCell.swift; sourceTree = "<group>"; };
@@ -119,6 +125,7 @@
 				CF2120FE1D21E7B800068D8F /* TimelineViewController.swift */,
 				CFB0639E1D22D5D500713B9C /* ComposeViewController.swift */,
 				CF70E19B1D23112D00782560 /* DetailViewController.swift */,
+				CF85BC511D234064009112E8 /* ProfileViewController.swift */,
 			);
 			name = "View Controllers";
 			sourceTree = "<group>";
@@ -156,6 +163,8 @@
 				CFD972BC1D231C89008B6667 /* retweetOnPressed.png */,
 				CFD972BD1D231C89008B6667 /* retweetPressed.png */,
 				CFBEE3DD1D2222F70009A497 /* home.png */,
+				CF85BC531D2341AF009112E8 /* imagePlaceholder.png */,
+				CF85BC551D234F20009112E8 /* user.png */,
 			);
 			name = Images;
 			sourceTree = "<group>";
@@ -251,6 +260,8 @@
 				CFD972C11D231C89008B6667 /* likePressed.png in Resources */,
 				CFD972C51D231C89008B6667 /* retweetInactive.png in Resources */,
 				CF1BEF631D21BC4100BF0064 /* Assets.xcassets in Resources */,
+				CF85BC541D2341AF009112E8 /* imagePlaceholder.png in Resources */,
+				CF85BC561D234F20009112E8 /* user.png in Resources */,
 				CFD972C61D231C89008B6667 /* retweetOnHover.png in Resources */,
 				CFD972B21D2314B4008B6667 /* Main.storyboard in Resources */,
 			);
@@ -313,6 +324,7 @@
 			files = (
 				CF70E19C1D23112D00782560 /* DetailViewController.swift in Sources */,
 				CF2120FD1D21C8CE00068D8F /* TwitterClient.swift in Sources */,
+				CF85BC521D234064009112E8 /* ProfileViewController.swift in Sources */,
 				CFBEE3E31D2227F70009A497 /* TimelineCell.swift in Sources */,
 				CF1BEF5E1D21BC4100BF0064 /* LoginViewController.swift in Sources */,
 				CFB0639F1D22D5D500713B9C /* ComposeViewController.swift in Sources */,

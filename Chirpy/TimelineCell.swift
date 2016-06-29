@@ -9,7 +9,7 @@
 import UIKit
 
 class TimelineCell: UITableViewCell {
-    @IBOutlet weak var profileImageView: UIImageView!
+    @IBOutlet weak var profileButton: UIButton!
     @IBOutlet weak var usernameLabel: UILabel!
     @IBOutlet weak var screenNameLabel: UILabel!
     @IBOutlet weak var timestampLabel: UILabel!

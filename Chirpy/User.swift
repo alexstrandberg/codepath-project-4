@@ -13,6 +13,8 @@ class User: NSObject {
     var screenname: String?
     var profileURL: NSURL?
     var tagline: String?
+    var following: Int = 0
+    var followers: Int = 0
     
     var dictionary: NSDictionary?
     
@@ -22,6 +24,8 @@ class User: NSObject {
         case ProfileURL = "profile_image_url_https"
         case Tagline = "description"
         case CurrentUserDataDefaults = "currentUserData"
+        case Following = "friends_count"
+        case Followers = "followers_count"
     }
     
     init(dictionary: NSDictionary) {
@@ -36,6 +40,10 @@ class User: NSObject {
         }
         
         tagline = dictionary[UserKeys.Tagline.rawValue] as? String
+        
+        following = dictionary[UserKeys.Following.rawValue] as? Int ?? 0
+        
+        followers = dictionary[UserKeys.Followers.rawValue] as? Int ?? 0
     }
     
     static var _currentUser: User?
