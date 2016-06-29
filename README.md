@@ -20,11 +20,11 @@ The following **required** functionality is completed:
 - [X] User can tap on a tweet to view it, with controls to retweet, favorite, and reply.
 - [X] User can compose a new tweet by tapping on a compose button.
 - [X] User can tap the profile image in any tweet to see another user's profile
-- [X] Contains the user header view: picture and tagline
-- [X] Contains a section with the users basic stats: # tweets, # following, # followers
+    - [X] Contains the user header view: picture and tagline
+    - [X] Contains a section with the users basic stats: # tweets, # following, # followers
 - [X] User can navigate to view their own profile
-- [X] Contains the user header view: picture and tagline
-- [X] Contains a section with the users basic stats: # tweets, # following, # followers
+    - [X] Contains the user header view: picture and tagline
+    - [X] Contains a section with the users basic stats: # tweets, # following, # followers
 
 The following **optional** features are implemented:
 
