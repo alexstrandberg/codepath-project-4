@@ -15,6 +15,7 @@ class User: NSObject {
     var tagline: String?
     var following: Int = 0
     var followers: Int = 0
+    var profileBannerURL: NSURL?
     
     var dictionary: NSDictionary?
     
@@ -26,6 +27,7 @@ class User: NSObject {
         case CurrentUserDataDefaults = "currentUserData"
         case Following = "friends_count"
         case Followers = "followers_count"
+        case ProfileBannerURL = "profile_banner_url"
     }
     
     init(dictionary: NSDictionary) {
@@ -44,6 +46,11 @@ class User: NSObject {
         following = dictionary[UserKeys.Following.rawValue] as? Int ?? 0
         
         followers = dictionary[UserKeys.Followers.rawValue] as? Int ?? 0
+        
+        let profileBannerURLString = dictionary[UserKeys.ProfileBannerURL.rawValue] as? String
+        if let profileBannerURLString = profileBannerURLString {
+            profileBannerURL = NSURL(string: profileBannerURLString)
+        }
     }
     
     static var _currentUser: User?
