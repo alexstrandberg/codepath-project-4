@@ -18,6 +18,7 @@ enum JSONURLs: String {
     case PostTweet = "1.1/statuses/update.json?status="
     case Mentions = "1.1/statuses/mentions_timeline.json"
     case UnRetweet = "1.1/statuses/unretweet/"
+    case UserFromScreenname = "1.1/users/show.json?screen_name="
 }
 
 enum TokenURLs: String {
@@ -117,6 +118,17 @@ class TwitterClient: BDBOAuth1SessionManager {
                 failure(error)
         })
         
+    }
+    
+    func userFromScreenname(screenname: String, success: User -> (), failure: NSError -> ()) {
+        let url = JSONURLs.UserFromScreenname.rawValue + screenname
+        TwitterClient.sharedInstance.GET(url, parameters: nil, progress: nil, success: { (task: NSURLSessionDataTask, response: AnyObject?) in
+            let userDictionary = response as! NSDictionary
+            let user = User(dictionary: userDictionary)
+            success(user)
+        }, failure: { (task: NSURLSessionDataTask?, error: NSError) in
+            failure(error)
+        })
     }
     
     func favorite(tweet: Tweet, success: (Tweet) -> (), failure: NSError -> ()) {

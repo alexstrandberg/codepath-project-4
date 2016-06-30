@@ -97,6 +97,23 @@ class TimelineViewController: UIViewController, UITableViewDelegate, UITableView
         
         cell.tweetText.text = tweet.text
         
+        if let text = tweet.text {
+            let words = text.componentsSeparatedByString(" ")
+            for word in words {
+                if word.hasPrefix("@") {
+                    let allowedCharacters = "@abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ_1234567890"
+                    var cleanedWord = ""
+                    for letter in word.characters {
+                        if allowedCharacters.containsString(String(letter)) {
+                            cleanedWord += String(letter)
+                        }
+                    }
+                    let range = text.rangeOfString(cleanedWord)!
+                    cell.tweetText.addLinkToURL(NSURL(string: cleanedWord), withRange: NSRange(location: text.characters.startIndex.distanceTo(range.startIndex), length: range.count))
+                }
+            }
+        }
+        
         if let timestamp = tweet.timestamp {
             cell.timestampLabel.text = Tweet.timeAgoSince(timestamp)
         }
@@ -105,7 +122,19 @@ class TimelineViewController: UIViewController, UITableViewDelegate, UITableView
     }
     
     func attributedLabel(label: TTTAttributedLabel!, didSelectLinkWithURL url: NSURL!) {
-        UIApplication.sharedApplication().openURL(url)
+        if !url.absoluteString.hasPrefix("@") {
+            UIApplication.sharedApplication().openURL(url)
+        } else {
+            
+            TwitterClient.sharedInstance.userFromScreenname(url.absoluteString.substringFromIndex(url.absoluteString.startIndex.advancedBy(1)), success: { (user: User) in
+                let navigationController = self.storyboard?.instantiateViewControllerWithIdentifier("ProfileNavigationController") as! UINavigationController
+                let vc = navigationController.topViewController as! ProfileViewController
+                vc.user = user
+                self.presentViewController(navigationController, animated: true, completion: nil)
+            }, failure: { (error: NSError) in
+                print(error.localizedDescription)
+            })
+        }
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
