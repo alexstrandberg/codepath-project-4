@@ -12,6 +12,7 @@ class User: NSObject {
     var name: String?
     var screenname: String?
     var profileURL: NSURL?
+    var profileURLBigger: NSURL?
     var tagline: String?
     var following: Int = 0
     var followers: Int = 0
@@ -39,6 +40,8 @@ class User: NSObject {
         let profileURLString = dictionary[UserKeys.ProfileURL.rawValue] as? String
         if let profileURLString = profileURLString {
             profileURL = NSURL(string: profileURLString)
+            let modifiedProfileURLString = profileURLString.stringByReplacingOccurrencesOfString("_normal", withString: "_bigger")
+            profileURLBigger = NSURL(string: modifiedProfileURLString)
         }
         
         tagline = dictionary[UserKeys.Tagline.rawValue] as? String

@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import MBProgressHUD
 
 protocol ComposeViewControllerDelegate : class {
     func didPostTweet(tweet: Tweet)
@@ -91,8 +92,13 @@ class ComposeViewController: UIViewController, UITextViewDelegate {
     }
 
     @IBAction func postTweet(sender: UIButton) {
+        toggleButton(false)
+        // Display HUD right before the request is made
+        MBProgressHUD.showHUDAddedTo(self.view, animated: true)
         TwitterClient.sharedInstance.postTweet(replyStatusID: replyStatusID, message: tweetTextView.text, success: { (tweet: Tweet) in
             self.delegate?.didPostTweet(tweet)
+            // Hide HUD once the network request comes back (must be done on main UI thread)
+            MBProgressHUD.hideHUDForView(self.view, animated: true)
             self.dismissViewControllerAnimated(true, completion: nil)
         }) { (error: NSError) in
             print(error.localizedDescription)
