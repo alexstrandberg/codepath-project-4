@@ -4,7 +4,7 @@ Chirpy is a basic Twitter app to read and compose tweets the [Twitter API](https
 
 Submitted by: Alexander Strandberg
 
-Time spent: 21 hours spent in total
+Time spent: 22 hours spent in total
 
 ## User Stories
 
@@ -40,19 +40,19 @@ The following **optional** features are implemented:
 
 The following **additional** features are implemented:
 
-- [ ] List anything else that you can get done to improve the app functionality!
+- [X] User can click @screenname in tweet to go to that profile
+- [X] Profile view has user's banner
 
 Please list two areas of the assignment you'd like to **discuss further with your peers** during the next class (examples include better ways to implement something, how to extend your app in certain ways, etc):
 
-1.
+1. 
 2.
 
 ## Video Walkthrough
 
 Here's a walkthrough of implemented user stories:
 
-![Video Walkthrough](Chirpy.gif)
-![Rotating](ChirpyRotating.gif)
+![Video Walkthrough](Chirpy2.gif)
 
 GIF created with [LiceCap](http://www.cockos.com/licecap/).
 

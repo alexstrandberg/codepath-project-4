@@ -45,8 +45,8 @@ class ProfileViewController: UIViewController {
                 navigationItem.title = "My Profile"
             }
             
-            if let profileURL = user.profileURL {
-                imageView.setImageWithURL(profileURL)
+            if let profileURLBigger = user.profileURLBigger {
+                imageView.setImageWithURL(profileURLBigger)
             }
             
             if let screenname = user.screenname {
