@@ -11,6 +11,17 @@ import MBProgressHUD
 import TTTAttributedLabel
 
 class TimelineViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, TTTAttributedLabelDelegate, ComposeViewControllerDelegate, UIScrollViewDelegate {
+    @IBOutlet weak var profileView: UIView!
+    
+    @IBOutlet weak var profileImageView: UIImageView!
+    @IBOutlet weak var nameLabel: UILabel!
+    @IBOutlet weak var screennameLabel: UILabel!
+    @IBOutlet weak var taglineLabel: UILabel!
+    @IBOutlet weak var followingCountLabel: UILabel!
+    @IBOutlet weak var followersCountLabel: UILabel!
+    @IBOutlet weak var followersLabel: UILabel!
+    @IBOutlet weak var bannerImageView: UIImageView!
+    
     @IBOutlet weak var tableView: UITableView!
     
     let CellIdentifier = "TimelineCell"
@@ -30,6 +41,7 @@ class TimelineViewController: UIViewController, UITableViewDelegate, UITableView
     let refreshControl = UIRefreshControl()
     
     var timelineType = "home"
+    var user: User?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -40,8 +52,17 @@ class TimelineViewController: UIViewController, UITableViewDelegate, UITableView
         tableView.estimatedRowHeight = CellHeightEstimate
         tableView.rowHeight = UITableViewAutomaticDimension
         
-        if timelineType != "home" {
+        if timelineType != "home" && timelineType != "mentions" {
             navigationItem.rightBarButtonItem = nil
+            navigationItem.leftBarButtonItem = nil
+        } else {
+            //profileView.translatesAutoresizingMaskIntoConstraints = true
+            //profileView.frame = CGRect(x: 0, y: 0, width: 0, height: 0)
+            //profileView.hidden = true
+            profileView.removeFromSuperview()
+            view.addConstraint(NSLayoutConstraint(item: tableView, attribute: .Top, relatedBy: .Equal, toItem: topLayoutGuide, attribute: .Bottom, multiplier: 1, constant: 0))
+            //tableView.translatesAutoresizingMaskIntoConstraints = true
+            //tableView.frame = CGRect(x: 0, y: (navigationController?.navigationBar.frame.height)!, width: view.frame.width, height: view.frame.height-(navigationController?.navigationBar.frame.height)!)
         }
         
         // Initialize a UIRefreshControl
@@ -59,6 +80,54 @@ class TimelineViewController: UIViewController, UITableViewDelegate, UITableView
         var insets = tableView.contentInset;
         insets.bottom += InfiniteScrollActivityView.defaultHeight;
         tableView.contentInset = insets
+        
+        if timelineType == "user" {
+            navigationItem.title = "View Profile"
+            if user == nil {
+                user = User.currentUser
+            }
+        }
+        
+        if let user = user {
+            nameLabel.text = user.name
+            
+            if user.screenname == User.currentUser?.screenname {
+                navigationItem.title = "My Profile"
+            }
+            
+            if let profileURLBigger = user.profileURLBigger {
+                profileImageView.setImageWithURL(profileURLBigger)
+            }
+            
+            if let screenname = user.screenname {
+                screennameLabel.text = "@" + screenname
+            }
+            
+            if let tagline = user.tagline {
+                taglineLabel.text = tagline
+            }
+            
+            followingCountLabel.text = "\(user.following)"
+            followersCountLabel.text = "\(user.followers)"
+            
+            if user.followers != 1 {
+                followersLabel.text = "Followers"
+            } else {
+                followersLabel.text = "Follower"
+            }
+            
+            if let profileBannerURL = user.profileBannerURL {
+                bannerImageView.setImageWithURL(profileBannerURL)
+            }
+        }
+    }
+    
+    override func viewDidLayoutSubviews() {
+        if user != nil {
+            let newHeight = followersCountLabel.frame.origin.y + followersCountLabel.frame.height
+            profileView.frame = CGRect(x: 0, y: topLayoutGuide.length, width: view.frame.width, height: newHeight)
+            tableView.frame = CGRect(x: 0, y: profileView.frame.origin.y + profileView.frame.height, width: view.frame.width, height: view.frame.height-bottomLayoutGuide.length-profileView.frame.height)
+        }
     }
     
     override func didReceiveMemoryWarning() {
@@ -117,6 +186,8 @@ class TimelineViewController: UIViewController, UITableViewDelegate, UITableView
         if let timestamp = tweet.timestamp {
             cell.timestampLabel.text = Tweet.timeAgoSince(timestamp)
         }
+        
+        cell.profileButton.addTarget(self, action: #selector(showProfile(_:)), forControlEvents: .TouchUpInside)
             
         return cell
     }
@@ -127,10 +198,10 @@ class TimelineViewController: UIViewController, UITableViewDelegate, UITableView
         } else {
             
             TwitterClient.sharedInstance.userFromScreenname(url.absoluteString.substringFromIndex(url.absoluteString.startIndex.advancedBy(1)), success: { (user: User) in
-                let navigationController = self.storyboard?.instantiateViewControllerWithIdentifier("ProfileNavigationController") as! UINavigationController
-                let vc = navigationController.topViewController as! ProfileViewController
+                let vc = self.storyboard?.instantiateViewControllerWithIdentifier("TimelineViewController") as! TimelineViewController
+                vc.timelineType = "user"
                 vc.user = user
-                self.presentViewController(navigationController, animated: true, completion: nil)
+                self.navigationController?.pushViewController(vc, animated: true)
             }, failure: { (error: NSError) in
                 print(error.localizedDescription)
             })
@@ -151,7 +222,10 @@ class TimelineViewController: UIViewController, UITableViewDelegate, UITableView
     }
     
     func showProfile(sender: UIButton) {
-        performSegueWithIdentifier("profileSegue", sender: sender)
+        let vc = storyboard?.instantiateViewControllerWithIdentifier("TimelineViewController") as! TimelineViewController
+        vc.timelineType = "user"
+        vc.user = tweets[sender.tag].user
+        navigationController?.pushViewController(vc, animated: true)
     }
     
     func didPostTweet(tweet: Tweet) {
@@ -183,7 +257,7 @@ class TimelineViewController: UIViewController, UITableViewDelegate, UITableView
         if tweets.count > 0 {
             maxID = tweets[tweets.count-1].idStr!
         }
-        TwitterClient.sharedInstance.timeline(maxID, timelineType: timelineType, success: { (tweets: [Tweet], shouldClearArray: Bool) in
+        TwitterClient.sharedInstance.timeline(maxID, timelineType: timelineType, user: user, success: { (tweets: [Tweet], shouldClearArray: Bool) in
             if shouldClearArray {
                 self.tweets = []
             }
@@ -224,11 +298,6 @@ class TimelineViewController: UIViewController, UITableViewDelegate, UITableView
             let cell = sender as! TimelineCell
             let indexPath = tableView.indexPathForCell(cell)
             vc.tweet = tweets[indexPath!.row]
-        } else if segue.identifier == "profileSegue" {
-            let navigationController = segue.destinationViewController as! UINavigationController
-            let vc = navigationController.topViewController as! ProfileViewController
-            let button = sender as! UIButton
-            vc.user = tweets[button.tag].user
         } else if segue.identifier == "composeSegue" {
             let vc = segue.destinationViewController as! ComposeViewController
             vc.delegate = self
