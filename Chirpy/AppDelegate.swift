@@ -35,11 +35,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let mentionsViewController = mentionsNavigationController.topViewController as! TimelineViewController
         mentionsViewController.timelineType = "mentions"
         
-        let profileNavigationController = storyboard.instantiateViewControllerWithIdentifier("ProfileNavigationController") as! UINavigationController
+        let profileNavigationController = storyboard.instantiateViewControllerWithIdentifier("TimelineNavigationController") as! UINavigationController
         profileNavigationController.tabBarItem.title = "Me"
         profileNavigationController.tabBarItem.image = UIImage(named: "user")
-        let profileViewController = profileNavigationController.topViewController as! ProfileViewController
-        profileViewController.user = User.currentUser
+        let profileViewController = profileNavigationController.topViewController as! TimelineViewController
+        profileViewController.timelineType = "user"
         
         let tabBarController = UITabBarController()
         tabBarController.viewControllers = [homeNavigationController, mentionsNavigationController, profileNavigationController]

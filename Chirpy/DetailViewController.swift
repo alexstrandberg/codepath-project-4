@@ -38,6 +38,8 @@ class DetailViewController: UIViewController, TTTAttributedLabelDelegate {
         
         favoriteButton.setImage(UIImage(named: "likeOnHover"), forState: .Selected)
         
+        profileButton.addTarget(self, action: #selector(showProfile(_:)), forControlEvents: .TouchUpInside)
+        
         updateView()
     }
 
@@ -146,13 +148,22 @@ class DetailViewController: UIViewController, TTTAttributedLabelDelegate {
         } else {
             
             TwitterClient.sharedInstance.userFromScreenname(url.absoluteString.substringFromIndex(url.absoluteString.startIndex.advancedBy(1)), success: { (user: User) in
-                let navigationController = self.storyboard?.instantiateViewControllerWithIdentifier("ProfileNavigationController") as! UINavigationController
-                let vc = navigationController.topViewController as! ProfileViewController
+                let vc = self.storyboard?.instantiateViewControllerWithIdentifier("TimelineViewController") as! TimelineViewController
+                vc.timelineType = "user"
                 vc.user = user
-                self.presentViewController(navigationController, animated: true, completion: nil)
-                }, failure: { (error: NSError) in
+                self.navigationController?.pushViewController(vc, animated: true)
+            }, failure: { (error: NSError) in
                     print(error.localizedDescription)
             })
+        }
+    }
+    
+    func showProfile(sender: UIButton) {
+        if let tweet = tweet {
+            let vc = storyboard?.instantiateViewControllerWithIdentifier("TimelineViewController") as! TimelineViewController
+            vc.timelineType = "user"
+            vc.user = tweet.user
+            navigationController?.pushViewController(vc, animated: true)
         }
     }
     
@@ -167,12 +178,6 @@ class DetailViewController: UIViewController, TTTAttributedLabelDelegate {
             vc.replyUsername = tweet?.user?.name
             vc.replyScreenname = tweet?.user?.screenname
             vc.replyStatusID = (tweet?.idStr)!
-        } else if segue.identifier == "showProfileFromDetailView" {
-            if let tweet = tweet {
-                let navigationController = segue.destinationViewController as! UINavigationController
-                let vc = navigationController.topViewController as! ProfileViewController
-                vc.user = tweet.user
-            }
         }
     }
 

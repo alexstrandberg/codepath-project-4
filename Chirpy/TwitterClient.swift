@@ -19,6 +19,7 @@ enum JSONURLs: String {
     case Mentions = "1.1/statuses/mentions_timeline.json"
     case UnRetweet = "1.1/statuses/unretweet/"
     case UserFromScreenname = "1.1/users/show.json?screen_name="
+    case TimelineUser = "1.1/statuses/user_timeline.json?screen_name="
 }
 
 enum TokenURLs: String {
@@ -82,17 +83,29 @@ class TwitterClient: BDBOAuth1SessionManager {
         })
     }
     
-    func timeline(maxID: String = "", timelineType: String = "home", success: ([Tweet], Bool) -> (), failure: NSError -> ()) {
+    func timeline(maxID: String = "", timelineType: String = "home", user: User?, success: ([Tweet], Bool) -> (), failure: NSError -> ()) {
         var url = ""
         var shouldClearArray = true
         if timelineType == "home" {
             url = JSONURLs.Timeline.rawValue
         } else if timelineType == "mentions" {
             url = JSONURLs.Mentions.rawValue
+        } else if timelineType == "user" {
+            url = JSONURLs.TimelineUser.rawValue
+            if let user = user {
+                url += user.screenname!
+            } else {
+                url += User.currentUser!.screenname!
+            }
         }
         
         if maxID != "" {
-            url += "?max_id="+maxID
+            if timelineType == "user" {
+                url += "&"
+            } else {
+                url += "?"
+            }
+            url += "max_id="+maxID
             url += "&count=21" // First tweet returned will be a duplicate
             shouldClearArray = false
         }
