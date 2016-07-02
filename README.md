@@ -4,7 +4,7 @@ Chirpy is a basic Twitter app to read and compose tweets the [Twitter API](https
 
 Submitted by: Alexander Strandberg
 
-Time spent: 22 hours spent in total
+Time spent: 30 hours spent in total
 
 ## User Stories
 
@@ -52,7 +52,7 @@ Please list two areas of the assignment you'd like to **discuss further with you
 
 Here's a walkthrough of implemented user stories:
 
-![Video Walkthrough](Chirpy2.gif)
+![Video Walkthrough](Chirpy3.gif)
 
 GIF created with [LiceCap](http://www.cockos.com/licecap/).
 

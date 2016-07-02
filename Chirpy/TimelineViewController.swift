@@ -33,6 +33,28 @@ class TimelineViewController: UIViewController, UITableViewDelegate, UITableView
         }
     }
     
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        
+        if timelineType != "home" && timelineType != "mentions" {
+            sizeHeaderToFit()
+        }
+    }
+    
+    func sizeHeaderToFit() {
+        let headerView = profileView
+        
+        headerView.setNeedsLayout()
+        headerView.layoutIfNeeded()
+        
+        let height = headerView.systemLayoutSizeFittingSize(UILayoutFittingCompressedSize).height
+        var frame = headerView.frame
+        frame.size.height = height
+        headerView.frame = frame
+        
+        tableView.tableHeaderView = headerView
+    }
+    
     var isFirstLoad = true
     var isMoreDataLoading = false
     
@@ -52,17 +74,15 @@ class TimelineViewController: UIViewController, UITableViewDelegate, UITableView
         tableView.estimatedRowHeight = CellHeightEstimate
         tableView.rowHeight = UITableViewAutomaticDimension
         
-        if timelineType != "home" && timelineType != "mentions" {
+        if timelineType == "mentions" {
             navigationItem.rightBarButtonItem = nil
-            navigationItem.leftBarButtonItem = nil
-        } else {
-            //profileView.translatesAutoresizingMaskIntoConstraints = true
-            //profileView.frame = CGRect(x: 0, y: 0, width: 0, height: 0)
-            //profileView.hidden = true
+        }
+        
+        if timelineType != "user" {
             profileView.removeFromSuperview()
-            view.addConstraint(NSLayoutConstraint(item: tableView, attribute: .Top, relatedBy: .Equal, toItem: topLayoutGuide, attribute: .Bottom, multiplier: 1, constant: 0))
-            //tableView.translatesAutoresizingMaskIntoConstraints = true
-            //tableView.frame = CGRect(x: 0, y: (navigationController?.navigationBar.frame.height)!, width: view.frame.width, height: view.frame.height-(navigationController?.navigationBar.frame.height)!)
+            tableView.tableHeaderView = nil
+        } else {
+            navigationItem.leftBarButtonItem = nil
         }
         
         // Initialize a UIRefreshControl
@@ -119,14 +139,6 @@ class TimelineViewController: UIViewController, UITableViewDelegate, UITableView
             if let profileBannerURL = user.profileBannerURL {
                 bannerImageView.setImageWithURL(profileBannerURL)
             }
-        }
-    }
-    
-    override func viewDidLayoutSubviews() {
-        if user != nil {
-            let newHeight = followersCountLabel.frame.origin.y + followersCountLabel.frame.height
-            profileView.frame = CGRect(x: 0, y: topLayoutGuide.length, width: view.frame.width, height: newHeight)
-            tableView.frame = CGRect(x: 0, y: profileView.frame.origin.y + profileView.frame.height, width: view.frame.width, height: view.frame.height-bottomLayoutGuide.length-profileView.frame.height)
         }
     }
     
