@@ -76,10 +76,14 @@ class DetailViewController: UIViewController, TTTAttributedLabelDelegate {
                         for letter in word.characters {
                             if allowedCharacters.containsString(String(letter)) {
                                 cleanedWord += String(letter)
+                            } else if String(letter) == "\'" {
+                                break
                             }
                         }
-                        let range = text.rangeOfString(cleanedWord)!
-                        tweetText.addLinkToURL(NSURL(string: cleanedWord), withRange: NSRange(location: text.characters.startIndex.distanceTo(range.startIndex), length: range.count))
+                        
+                        if let range = text.rangeOfString(cleanedWord) {
+                            tweetText.addLinkToURL(NSURL(string: cleanedWord), withRange: NSRange(location: text.characters.startIndex.distanceTo(range.startIndex), length: range.count))
+                        }
                     }
                 }
             }
